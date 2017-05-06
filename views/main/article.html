@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>文章详情-一个知识积累平台</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/font/iconfont.css">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--导航开始-->
+<nav class="navbar navbar-fixed-top mynav" id="nav">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed mynav-icon" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar color"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">SHEYUDE</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <!--导航左边-->
+            <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="#">博客</a></li>-->
+                <!--<li><a href="#">关于我</a></li>-->
+            </ul>
+            <!--导航右边-->
+            <ul class="nav navbar-nav navbar-right" >
+                <!--<li class="active"><a href="#">博客</a></li>-->
+                <li class="navbar-right"><a href="#">登陆</a></li>
+                <form class="navbar-form navbar-right visible-lg">
+                    <input type="text" class="form-control" placeholder="输入关键字">
+                </form>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--导航结束-->
+<!--中间部分-->
+<div class="head" id="head">
+    <div class="container">
+        <div class="row head-row">
+            <div class="col-lg-12 text-center">
+                <h2>“取”是一种本事，“舍”是一门哲学。没有能力的人取不足；没有通悟的人，舍不得。</h2>
+            </div>
+            <div class="col-lg-12 text-center">
+                <a href="#" class="about">关于我!</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!--大屏不显示部分-->
+        <div class="col-md-12 hidden-lg">
+            <input type="text" class="search form-control" placeholder="输入关键字">
+        </div>
+        <div class="col-md-12 hidden-lg">
+            <div class="catrgory main-title">
+                <h3>文章分类</h3>
+                <div>
+                    <a href="#">HTML</a>
+                    <a href="#">CSS</a>
+                    <a href="#">JavaScript</a>
+                    <a href="#">Python</a>
+                    <a href="#">HTML</a>
+                    <a href="#">CSS</a>
+                    <a href="#">JavaScript</a>
+                    <a href="#">Python</a>
+                    <a href="#">HTML</a>
+                    <a href="#">CSS</a>
+                    <a href="#">JavaScript</a>
+                    <a href="#">Python</a>
+                    <a href="#">JavaScript</a>
+                    <a href="#">Python</a>
+                    <a href="#">HTML</a>
+                    <a href="#">CSS</a>
+                    <a href="#">CSS</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row main">
+        <!--正文左边-->
+        <div class="col-md-12">
+            <div class="content main-title">
+                <h3><a href="#">标题测试</a></h3>
+                <div class="article">
+                    <div class="article-top">
+                        <i class="iconfont">&#xe615;</i>
+                        <span class="time" title="发表时间">2016-4-9</span>
+                        <i class="iconfont">&#xe63b;</i>
+                        <span title="浏览次数">20</span>
+                        <span class="article-tar"><a href="#">Python</a></span>
+                    </div>
+                    <div class="article-text article-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus earum facilis fugiat ipsa
+                        itaque possimus recusandae rem saepe ut voluptatum! Amet consequatur hic, obcaecati sint
+                        temporibus voluptas? Amet, deserunt, velit!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus earum facilis fugiat ipsa
+                        itaque possimus recusandae rem saepe ut voluptatum! Amet consequatur hic, obcaecati sint
+                        temporibus voluptas? Amet, deserunt, velit!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus earum facilis fugiat ipsa
+                        itaque possimus recusandae rem saepe ut voluptatum! Amet consequatur hic, obcaecati sint
+                        temporibus voluptas? Amet, deserunt, velit!</div>
+                    <div class="text-right article-bottom">
+                        <a href="#">返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部-->
+<div class=" ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 foot">
+                <div><a href="#">舍与得</a><span> Copyright&copy;2017</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right-top">
+    <i class="iconfont" id="top" title="返回顶部">&#xe619;</i>
+</div>
+<!-- JS部分-->
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/script.js"></script>
+</body>
+</html>

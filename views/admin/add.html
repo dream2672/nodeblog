@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>发布文章-一个知识积累平台</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/font/iconfont.css">
+    <!--富文本-->
+    <script src="../js/ueditor/ueditor.config.js"></script>
+    <script src="../js/ueditor/ueditor.all.js"></script>
+    <script src="../js/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--左边-->
+<div class="left">
+    <!--左边隐藏-->
+    <span class="left-bar" id="left-bar"><i class="iconfont" title="隐藏">&#xe612;</i></span>
+    <div id="left-hiden">
+        <h4>舍与得</h4>
+        <div class="logo"><img src="../img/admin/logo.png" alt=""></div>
+        <ul class="left-list" id="left-list">
+            <li><a href="#"><i class="iconfont" >&#xe600;</i> 文章管理</a>
+                <ul>
+                    <li><a href="#">文章列表</a></li>
+                    <li><a href="#">发布文章</a></li>
+                    <li><a href="#">修改文章</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="iconfont" >&#xe60d;</i> 分类管理</a>
+                <ul>
+                    <li><a href="#">分类列表</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="iconfont" >&#xe607;</i> 留言管理</a>
+                <ul>
+                    <li><a href="#">留言列表</a></li>
+                    <li><a href="#">删除留言</a></li>
+                </ul>
+            </li>
+            <li><span><i class="iconfont">&#xe611;</i> 离开</span></li>
+        </ul>
+    </div>
+</div>
+<div class="right">
+    <div class="container-fluid main">
+        <div class="row my-row">
+            <div class=" col-lg-12 title">
+                <!--模拟面包屑-->
+                <a href="#" class="sm-bar" id="sm-bar"><i class="iconfont">&#xe7bd;</i></a>
+                <div class="hidden-sm hidden-xs title-left">
+                    <a href="#" title="首页"><i class="iconfont">&#xe603;</i></a>
+                    <a href="#" title="设置" class="title-a"><i class="iconfont">&#xe601;</i></a>
+                    <a href="#" title="邮件"><i class="iconfont">&#xe616;</i></a>
+                </div>
+                <div class="title-right">
+                    <input type="text" class="form-control search" placeholder="输入关键字">
+                    <div>
+                        <span title="管理员"><i class="iconfont">&#xe7e1;:</i>舍与得</span>
+                        <a href="#" title="退出"><i class="iconfont">&#xe62f;</i></a>
+                    </div>
+                </div>
+            </div>
+            <!--类容部分-->
+            <div class="col-lg-12 content" id="content">
+                <!--标题-->
+                <div class="content-title">
+                    <h3>文章管理</h3>
+                    <div>
+                        <ol class="breadcrumb">
+                            <li>Home</li>
+                            <li>文章管理</li>
+                            <li class="active">发布文章</li>
+                        </ol>
+                    </div>
+                </div>
+                <!--发布文章-->
+                <div class="add-active">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <!--<label for="title" class="col-sm-1 col-xs-2 control-label">标题:</label>-->
+                            <div class="col-sm-6 col-xs-6">
+                                <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题">
+                            </div>
+                        </div>
+                        <div class="form-group myeditor">
+                            <div class="col-sm-12">
+                                <div id="editor" type="text/plain" class="editor"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"> 记住密码！
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" class="btn btn-default">发布</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+</script>
+<!-- JS部分-->
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/admin.js"></script>
+
+</body>
+</html>

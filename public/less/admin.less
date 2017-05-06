@@ -1,0 +1,378 @@
+@charset "utf-8";
+body,html{
+  height:100%;
+  background-color: @bg_color;
+}
+html{
+  font-size: 16px;
+}
+//网页预处理
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+  margin:0;
+  padding:0;
+}
+
+
+//登陆部分
+@f_color:#fff;
+@l_width:470px;
+//后台样式
+
+@bg_color:rgb(43,43,43);
+@c_color:#999999;
+
+
+//网页预处理部分
+a:hover{
+  text-decoration: none;
+}
+a:focus{
+  text-decoration: none;
+}
+//定义宽高
+.h_w(@height,@width){
+  height:@height;
+  width:@width;
+}
+//a连接和hover效果
+.a(@f_color,@hover_color,@time:1s){
+  color:@f_color;
+  text-decoration: none;
+  .transition(all @time);
+  &:hover{
+    color: @hover_color;
+  }
+}
+.a(bg,@f_color,@hover_color,@hover_bg_color,@time:2s){
+  color:@f_color;
+  text-decoration: none;
+  transition: all @time;
+  &:hover{
+    color: @hover_color;
+    background: @hover_bg_color;
+  }
+}
+//浏览器自动加前缀
+.pre(@style,@value){
+  -moz-@{style}:@value;    // 火狐等使用Mozilla浏览器引擎的浏览器
+  -webkit-@{style}:@value;  // Safari, 谷歌浏览器等使用Webkit引擎的浏览器
+  -o-@{style}:@value;     // Opera浏览器(早期)
+  -ms-@{style}:@value;      // Internet Explorer (不一定)
+    @{style}:@value;
+}
+// CSS3样式封装
+.border-radius(@value){
+  .pre(border-radius,@value);
+}
+.box-sizing(@value:border-box){
+  .pre(box-sizing,@value);
+}
+.box-shadow(@value){
+  .pre(box-shadow,@value);
+}
+.transform(@value){
+  .pre(transform,@value);
+}
+.transition(@value){
+  .pre(transition,@value);
+}
+
+
+//登陆界面样式
+@media screen and (max-width: 800px) {
+  body .login{
+    .h_w(100%,100%);
+    position: absolute;
+    left:0;
+    top:0;
+    margin-left:0;
+    .border-radius(0px)
+  }
+}
+//登录框
+.login{
+  .h_w(350px,@l_width);
+  padding:30px;
+  position: absolute;
+  left:50%;
+  margin-left: -@l_width/2;
+  top:120px;
+  text-align: center;
+  color: @f_color;
+  background: url('/public/img/admin/mask.png');
+  z-index: 2;
+  .border-radius(10px);
+  h3{
+    margin-bottom:20px;
+  }
+}
+//背景样式
+.li-loop(@count,@i:1) when (@i <= @count){
+  .img@{i}{
+    background: url("/public//img/admin/@{i}.jpg");
+    opacity: 0;
+  }
+  .li-loop(@count,(@i + 1));
+}
+.login-img{
+  li{
+    position: fixed;
+    .h_w(100%,100%);
+    z-index: 1;
+  }
+  .li-loop(3)
+}
+
+@media screen and (max-width: 990px){
+  body .right .title-right{
+    padding-left:0;
+  }
+  body .right{
+    .content{
+      .border-radius(5px);
+    }
+  }
+}
+@media screen and (max-width: 800px){
+  body .left{
+    .h_w(100%,0);
+    #left-hiden{
+      display: none;
+    }
+    .left-bar{
+      display: none;
+    }
+    //display: none;
+  }
+  body .right{
+    margin-left:5px;
+    .search{
+      position: relative;
+      top: 8px;
+      left:50px;
+    }
+    .title .sm-bar{
+      display: inline-block;
+    }
+  }
+}
+@media screen and (max-width: 350px){
+  body .right{
+    .search{
+      display: none;
+    }
+  }
+}
+//.动画样式预定义
+.deg180{
+  .transform(rotate(180deg));
+}
+.deg0{
+  .transform(rotate(0deg));
+}
+//后台部分样式
+//左边样式
+.left{
+  .h_w(100%,100px);
+  background-color: @bg_color;
+  position: fixed;
+  text-align: center;
+  z-index:5;
+  // 左边隐藏
+  .left-bar{
+    position: absolute;
+    right:-20px;
+    top:300px;
+    z-index:10;
+    border: 1px solid @bg_color;
+    background-color: rgba(0,0,0,0);
+    display: inline-block;
+    .h_w(40px,40px);
+    line-height: 40px;
+    .border-radius(100%);
+    cursor: pointer;
+    .a(bg, #666,#fff,@bg_color,.5s);
+    i{
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+  }
+  & h4{
+    margin:20px 0;
+    font-size: 1rem;
+    .a(#fff,#5bc0de)
+  }
+  & .logo{
+    .h_w(70px,70px);
+    margin-left:15px;
+    .border-radius(100%);
+    overflow: hidden;
+    border:2px solid #fff;
+    margin-bottom:20px;
+    img{
+      width:68px;
+    }
+  }
+  //左边列表部分
+  &-list{
+    color: @c_color;
+    &>li{
+      position: relative;
+      &>a,span{
+        display: inline-block;
+        .h_w(50px,100%);
+        line-height: 50px;
+        cursor: pointer;
+        .a(bg,@c_color,#fff,rgba(0,0,0,.2));
+      }
+      //下拉样式
+      &>ul{
+        border-top:1px solid #383838;
+        text-align: right;
+        height:0;
+        overflow: hidden;
+        &>li>a{
+          line-height: 40px;
+          padding-right:10px;
+          display: inline-block;
+          width:100px;
+          .a(bg,@c_color,#fff,rgba(0,0,0,.2))
+        }
+      }
+    }
+    &>li:before{
+      content: '';
+      position: absolute;
+      bottom:0;
+      width:100%;
+      border-bottom:1px solid #383838;
+    }
+  }
+}
+//右边
+.right{
+  margin-left:100px;
+  height:100%;
+  //头部
+  .title{
+    height:50px;
+    color: @c_color;
+    position: relative;
+    overflow: hidden;
+    // 面包屑
+    .sm-bar{
+      position: absolute;
+      left:5px;
+      top:8px;
+      border:1px solid @c_color;
+      padding:5px 12px;
+      .border-radius(5px);
+      z-index: 3;
+      display: none;
+      .a(@c_color,#fff)
+    }
+    //头部左边
+    &-left{
+      background-color: #fff;
+      .h_w(100%,150px);
+      position: absolute;
+      left:0;
+      z-index: 2;
+      font-size: 0;
+      .title-a{
+        border-right:1px solid #dfdfdf;
+        border-left:1px solid #e0e0e0;
+      }
+      a{
+        display: inline-block;
+        .h_w(50px,50px);
+        line-height: 50px;
+        text-align: center;
+        .a(bg,#999999,#fff,#383838);
+        i{
+          font-size: 1.3rem;
+        }
+      }
+    }
+    //头部右边
+    &-right{
+      line-height: 50px;
+      .h_w(50px,100%);
+      padding-left:150px;
+      position: relative;
+      //搜索
+      .search{
+        width:100px;
+        background-color: #373737;
+        border:1px solid #515151;
+        outline: none;
+        color: @c_color;
+        position: relative;
+        top:8px;
+        // 去掉bt默认样式
+        &:focus{
+          .box-shadow(inset 0 1px 1px rgba(0,0,0,.0));
+        }
+      }
+      &>div{
+        position: absolute;
+        right:0;
+        top:0;
+        background: #373737;
+        padding:0 10px;
+        span{
+          display: inline-block;
+          line-height: 50px;
+          border-right:1px solid @bg_color;
+          padding-right:10px;
+          .a(@c_color,#fff);
+          i{
+            font-size: 1.2rem;
+          }
+        }
+        &>a{
+          margin-left:5px;
+          .a(@c_color,#fff);
+          i{
+            font-size:1.2rem;
+        }
+        }
+      }
+    }
+  }
+  //右边类容部分
+  .content{
+    width:99%;
+    margin-bottom:15px;
+    background-color: #fff;
+    .border-radius(0 5px 5px 5px);
+    .box-sizing();
+    padding:30px 20px;
+    color: #777;
+    //类容标题
+    & .content-title{
+      border-bottom:1px solid #e0e0e0;
+      margin-bottom:20px;
+      h3{
+        font-weight: 100;
+        margin-bottom:10px;
+      }
+      div ol{
+        margin-bottom:10px;
+      }
+    }
+  }
+}
+
+
+// 发布文章
+.add-active{
+  .myeditor{
+    //border:1px solid red;
+  }
+  & .editor{
+    //width:100%;
+    //height:300px;
+    //margin-bottom:100px;
+  }
+}
