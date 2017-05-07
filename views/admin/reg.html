@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ch-ZN">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<!--<form action="">-->
+    <input type="text" placeholder="用户名" name="username" id="username">
+    <br>
+    <input type="password" placeholder="密码" name="password" id="password">
+    <br>
+    <input type="password" placeholder="重复密码" name="rpassword" id="rpassword">
+    <br>
+    <input type="button" value="注册" id="submit">
+<!--</form>-->
+<script src="/public//js/jquery.js"></script>
+<script>
+    $("#submit").click(function(){
+        $.ajax({
+            type:'post',
+            url:'/api/user/reg',
+            data:{
+                username:$("#username").val(),
+                password:$("#password").val(),
+                rpassword:$("#rpassword").val(),
+                time:Math.random(),
+            },
+            dataType:'json',
+            success:function(result){
+                console.log(result);
+            }
+        })
+        return false;
+    })
+</script>
+</body>
+</html>

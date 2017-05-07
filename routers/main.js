@@ -7,15 +7,15 @@ var main = express.Router();
 
 /*
  首页
- req request 对象
- res response 对象
+ req request 客户端请求
+ res response 服务器给的响应
  next 函数
  */
 main.get('/',function(req, res, next){
     /*
      * 读取views下面的指定文件,并返回给客户端
      * */
-    res.render('main/index.html')
+    res.render('main/index')
 
 })
 //  返回数据

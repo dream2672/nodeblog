@@ -3,7 +3,8 @@
  */
 
 var mongoose = require("mongoose");
-var usersSchema = require("../schemas/users")
+var usersSchema = require('../schemas/users')
 
 
-module.exports = mongoose.model('User',usersSchema);
+var User = mongoose.model('User',usersSchema)
+module.exports = User;
