@@ -173,8 +173,6 @@ $(document).ready(function(){
             return false;
         }
     })
-    // // 注册
-
 
     // 验证框颜色
     proof("username");
@@ -217,7 +215,9 @@ $(document).ready(function(){
         return false;
     });
     // 登陆图片
+    // todo 提交2次
     $("#loginimg>img").click(function(){
+        // getAjax('/api/img',getImg);
         $.ajax({
             type:'get',
             url:'/api/img',
@@ -230,3 +230,15 @@ $(document).ready(function(){
         return false;
     });
 })
+/**
+ * ajax以get方式请求
+ * @param url 请求地址
+ * @param object 成功执行的函数
+ */
+function getAjax(url,object){
+    $.ajax({
+        type:'get',
+        url:url,
+        success:object,
+    })
+}

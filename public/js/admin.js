@@ -38,6 +38,12 @@ $(document).ready(function(){
         $("#regDiv").show();
         return false;
     })
+    // 切换登陆
+    $("#regLogin").click(function(){
+        $("#regDiv").hide();
+        $("#loginDiv").show();
+        return false;
+    })
     // 登陆界面警告框
     $("#close>div>span").click(function(){
         $("#close").hide();

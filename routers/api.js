@@ -142,6 +142,8 @@ api.get('/img',function(req, res, next){
     res.setHeader('Content-Type', 'image/bmp');
     res.end(imgData.img.getFileData());
     imgStr = imgData.str;
+    // 查看当前验证码
+    console.log(imgData.str);
 });
 // 验证码验证接口
 api.post('/img/verify',function(req, res, next){
