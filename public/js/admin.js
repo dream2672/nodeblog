@@ -30,8 +30,19 @@ $(document).ready(function(){
         if(sum == 3){
             sum = 0
         }
-        // console.log(sum)
     },4400)
+
+    // 切换注册
+    $("#loginReg").click(function(){
+        $("#loginDiv").hide();
+        $("#regDiv").show();
+        return false;
+    })
+    // 登陆界面警告框
+    $("#close>div>span").click(function(){
+        $("#close").hide();
+    })
+
 })
 // 后台界面
 $(document).ready(function(){

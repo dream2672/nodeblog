@@ -5,6 +5,8 @@
 var express = require("express");
 var main = express.Router();
 
+
+
 /*
  首页
  req request 客户端请求
@@ -18,5 +20,7 @@ main.get('/',function(req, res, next){
     res.render('main/index')
 
 })
+
+
 //  返回数据
 module.exports = main;

@@ -11,9 +11,7 @@ admin.get('/',function(req, res, next){
      * */
     res.render('admin/login')
 });
-
-// 注册入口
-admin.get('/reg',function (req, res, next) {
-    res.render('admin/reg');
+admin.get('/list',function(req, res, next){
+    res.render('admin/index')
 })
 module.exports = admin;

@@ -82,6 +82,7 @@ a:focus{
 @media screen and (max-width: 800px) {
   body .login{
     .h_w(100%,100%);
+    //width:100%;
     position: absolute;
     left:0;
     top:0;
@@ -90,8 +91,31 @@ a:focus{
   }
 }
 //登录框
+#regDiv{
+  display: none;
+}
+// 登录框错误警告部分
+#danger{
+  padding-left:4px;
+  padding-right:4px;
+  position: relative;
+  &>div{
+    padding:7px;
+    display: none;
+    position: relative;
+    left:0;
+    &>div{
+      right:5px;
+    }
+  }
+
+}
+.test{
+  background-color:#fff !important;
+}
 .login{
-  .h_w(350px,@l_width);
+  //.h_w(350px,@l_width);
+  width: @l_width;
   padding:30px;
   position: absolute;
   left:50%;
@@ -102,6 +126,20 @@ a:focus{
   background: url('/public/img/admin/mask.png');
   z-index: 2;
   .border-radius(10px);
+  // 错误消息定位
+  .error-p{
+    position: relative;
+    input{
+      position: relative;
+      left:0;
+    }
+    label{
+      color: #a94442;
+      position: absolute;
+      top:6px;
+      right:30px;
+    }
+  }
   h3{
     margin-bottom:20px;
   }

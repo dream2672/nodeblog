@@ -8,8 +8,9 @@
     <title>舍与得-一个知识积累平台</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/public//css/bootstrap.css">
-    <link rel="stylesheet" href="/public//css/admin.css">
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/admin.css">
+
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -20,17 +21,43 @@
     <![endif]-->
 </head>
 <body>
-<div class="login">
+<div class="login" id="loginDiv">
     <h3>LOGIN</h3>
-    <form action="" class="form-horizontal">
+    <form action="" class="form-horizontal" id="loginform">
+            <div class="col-sm-10 col-sm-offset-1 " id="danger">
+                <div class="alert alert-danger alert-dismissible" id="close">
+                    <div type="button" class="close" ><span aria-hidden="true">&times;</span></div>
+                    <span></span>
+                    <a href="#" class="alert-link">找回密码！</a>
+                </div>
+            </div>
+
         <div class="form-group ">
-            <div class="col-sm-10 col-sm-offset-1">
-                <input type="text" class="form-control" placeholder="用户名">
+            <div class="col-sm-10 col-sm-offset-1 error-p">
+                <input type="text" class="form-control" placeholder="用户名" name="loginusername" id="loginusername">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-10 col-sm-offset-1 error-p">
+                <input type="password" class="form-control" placeholder="密码" name="loginpassword" id="loginpassword">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-6 col-sm-offset-1 error-p">
+                <input type="text" class="form-control" placeholder="验证码" name="loginverify" id="loginverify">
+            </div>
+            <div class="col-sm-5 text-left" id="loginimg">
+                <img src="api/img" title="点击刷新" >
             </div>
         </div>
         <div class="form-group ">
             <div class="col-sm-10 col-sm-offset-1">
-                <input type="password" class="form-control" placeholder="密码">
+                <button class="btn btn-info btn-block" id="login">登陆</button>
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-10 col-sm-offset-1">
+                <button class="btn btn-warning btn-block" id="loginReg">注册</button>
             </div>
         </div>
         <div class="form-group ">
@@ -39,9 +66,42 @@
                 <label for="checkbox">记住密码!</label>
             </div>
         </div>
+    </form>
+</div>
+<div class="login" id="regDiv">
+    <h3>注册</h3>
+    <form action="" class="form-horizontal" id="form">
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-1 error-p">
+                <input type="text" class="form-control" placeholder="用户名" name="username" id="username">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-10 col-sm-offset-1 error-p">
+                <input type="password" class="form-control" placeholder="密码" name="password" id="password">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-10 col-sm-offset-1 error-p">
+                <input type="password" class="form-control" placeholder="重复密码" name="rpassword" id="rpassword">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-10 col-sm-offset-1 error-p">
+                <input type="text" class="form-control" placeholder="邮箱" name="email" id="email">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-6 col-sm-offset-1 error-p">
+                <input type="text" class="form-control" placeholder="验证码" name="verify" id="verify">
+            </div>
+            <div class="col-sm-5 text-left" id="regimg">
+                <img src="api/img" title="点击刷新" >
+            </div>
+        </div>
         <div class="form-group ">
             <div class="col-sm-10 col-sm-offset-1">
-                <button class="btn btn-success btn-block">登陆</button>
+                <button class="btn btn-info btn-block " id="reg">注册</button>
             </div>
         </div>
     </form>
@@ -55,8 +115,10 @@
 </div>
 
 <!-- JS部分-->
-<script src="/public//js/jquery.js"></script>
-<script src="/public//js/bootstrap.min.js"></script>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery.validate.min.js"></script>
+<script src="/public/api/adminapi.js"></script>
 <script src="/public//js/admin.js"></script>
 </body>
 </html>
