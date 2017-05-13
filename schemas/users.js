@@ -9,5 +9,18 @@ var mongoose = require('mongoose');
 module.exports = new mongoose.Schema({
     username:String,
     password:String,
-    email:String,
+    email:{
+        type:String,
+        default:null,
+    },
+    // 是否是管理员
+    isAdmin:{
+        type:Boolean,
+        default:false,
+    },
+    // 注册时间
+    regTime:{
+        type:Date,
+        default:  new Date(),
+    }
 });

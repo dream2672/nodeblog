@@ -79,8 +79,13 @@ $(document).ready(function(){
     }
     function onsize(){
         var clientHeight = document.body.clientHeight;
+
         var contentHeight = clientHeight - 65;
         $("#content").css({"min-height":contentHeight + "px"});
+
+        //蒙版高度
+        var right = $(".main").height()
+        $("#right").css({"min-height":right + "px"});
     }
 
 
@@ -99,14 +104,19 @@ $(document).ready(function(){
     var $left = $(".left");
     $("#sm-bar").click(function(){
         $("#left-hiden").show(300);
-        $left.animate({"width":"100px","display":"block"}).attr("smon","1");
-        // 修复bug
-        $(".left-bar").show(300);
-
+        $left.animate({"width":"100px","display":"block"});
+        $("#right").show()
     })
+    $("#right").click(function(){
+        $(this).hide();
+        $left.animate({"width":"0"});
+        $("#left-hiden").hide();
+    })
+
+
     // 侧边栏按钮
     $("#left-bar").click(function(){
-        if($left.attr("smon") == undefined &&($left.attr("on") == 1 || $left.attr("on") == undefined)){
+        if($left.attr("on") == 1 || $left.attr("on") == undefined){
             $("#left-hiden").hide();
             $left.animate({"width":"0",}).attr("on","0");
             $(".right").animate({"margin-left":"10px"});
@@ -117,19 +127,29 @@ $(document).ready(function(){
             $left.animate({"width":"100px"}).attr("on","1");
             $(".right").animate({"margin-left":"100px"});
             $("#left-hiden").show(300);
-
-            $("#left-bar").html("<i class='iconfont' title='隐藏'>&#xe612;</i>");
-        }
-        // 小屏
-        if($left.attr("on") == undefined && ($left.attr("smon") == 1 || $left.attr("smon") == undefined)){
-            $("#left-hiden").hide();
-            $left.animate({"width":"0",}).attr("smon","0");
-            $("#left-bar").html("<i class='iconfont' title='显示'>&#xe61e;</i>");
-        }else if($left.attr("smon") == 0){
-            $left.animate({"width":"100px"}).attr("smon","1");
-            $("#left-hiden").show(300);
             $("#left-bar").html("<i class='iconfont' title='隐藏'>&#xe612;</i>");
         }
     })
+
+    // login
+
+    // var logoTime = null;
+    // $(".logo").hover(function(){
+    //     var angle = 0;
+    //     logoTime = setInterval(function(){
+    //
+    //         if(angle >= 90){
+    //             angle -= 1
+    //             $(".logo").css({"transform":"rotate("+ angle+"deg)"});
+    //         }else{
+    //             angle+=1;
+    //             $(".logo").css({"transform":"rotate("+ angle+"deg)"});
+    //         }
+    //     },100);
+    // },function(){
+    //     clearInterval(logoTime);
+    //     $(".logo").css({"transform":"rotate(0deg)"});
+    // })
+
 })
 

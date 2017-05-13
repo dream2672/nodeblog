@@ -30,7 +30,7 @@ $(document).ready(function(){
                 equalTo: "#password"
             },
             email:{
-                required: true,
+                // required: true,
                 email: true
             },
             verify:{
@@ -67,7 +67,7 @@ $(document).ready(function(){
                 equalTo: "*两次密码必须一致！"
             },
             email: {
-                required: "*请输入邮箱！",
+                // required: "*请输入邮箱！",
                 email: "*请检查邮箱格式！"
             },
             verify:{
@@ -77,6 +77,7 @@ $(document).ready(function(){
         },
         // 验证通过后执行！
         submitHandler: function(form) {  //通过之后回调
+            $("#reg").addClass("disabled");
             $.ajax({
                 type:'post',
                 url:'/api/user/reg',
@@ -87,7 +88,7 @@ $(document).ready(function(){
                         var time = null, sum = 3;
                         time = setInterval(function(){
                             sum--;
-                            $("#reg").addClass("disabled").html(result.message + sum)
+                            $("#reg").html(result.message + sum)
                             if(sum == 0){
                                 $("#reg").removeClass("disabled").html("注册");
                                 $("#regDiv").css({"display":"none"});
@@ -164,7 +165,11 @@ $(document).ready(function(){
                         $("#close").show().animate({"left":"15px"},100).animate({"left":"-15px"},100).animate({"left":"0"},100);
                         $("#close>span").html(result.message)
                     }else if(result.code == 0){
-                        window.location.href='/admin/list'
+                        if(result.isAdmin == true){
+                            window.location.href='/admin'
+                        }else(
+                            window.location.href='/'
+                        )
                     }
                 }
             });
@@ -173,7 +178,24 @@ $(document).ready(function(){
             return false;
         }
     })
-
+    // 验证后台分类添加界面
+    $("#categorForm").validate({
+        dubug:true,
+        rules:{
+            categoryname:{
+                required:true,
+                minlength:2,
+                maxlength:10,
+            },
+        },
+        messages:{
+            categoryname:{
+                required:"*分类必填",
+                minlength:"*分类不能少于2个字符",
+                maxlength:"*分类不能超过10个字符",
+            }
+        }
+    })
     // 验证框颜色
     proof("username");
     proof("password");
@@ -184,6 +206,8 @@ $(document).ready(function(){
     proof("loginusername");
     proof("loginpassword");
     proof("loginverify");
+    // 后台
+    proof("categoryname");
     /**
      *
      * @param id 需要验证的id

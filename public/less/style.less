@@ -9,6 +9,7 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 }
 //导航栏样式
 body{
+  //background-color: #efefef;
   background: url("../img/bg-img.png");
 
 }
@@ -51,6 +52,9 @@ a:focus{
 .box-sizing(@value){
   .pre(box-sizing,@value);
 }
+.box-shadow(@value){
+  .pre(box-shadow,@value);
+}
 @media screen and (max-width: 799px) {
   body .head .h-fontsize{
     font-size: 1rem;
@@ -61,21 +65,34 @@ a:focus{
     line-height: 40px;
   }
 }
+//改bt默认样式
+.dropdown{
+  a{
+    background-color: rgba(0,0,0,0);
+    color: #fff;
+    &:hover{
+      background-color: rgba(0,0,0,0) !important;
+    }
+  }
+  .dropdown-menu{
+    background-color: rgba(0,0,0,.7);
+  }
+}
 .mynav{
   margin-bottom: 0;
   border-bottom:0;
   & a{
-    color: #fff;
+    color: #fff !important;
     font-size:1.125rem;
     transition: all 1s;
   }
-  & li>a:hover{
-    background: rgba(255,255,255,0);
-    color: #ccc;
+  & li a:hover{
+    background: rgba(0,0,0,0);
+    color: #d8d8d8 !important;
   }
-  & li>a:focus{
-    background: rgba(255,255,255,0);
-    color: #ccc;
+  & li a:focus{
+    background: rgba(255,255,255,0) !important;
+    color: #fff !important;
   }
 }
 // 修复导航栏面包屑消失
@@ -159,6 +176,7 @@ a:focus{
     font-size: 1.1rem;
     color: #1b1b1b;
     padding-left:10px;
+
   }
 }
 // 正文开始
@@ -166,10 +184,14 @@ a:focus{
   min-height:200px;
   //max-height:200px;
   margin-bottom:20px;
+  //.box-shadow(4px 4px 5px rgba(0,0,0,.2));
   .bc;
+  //&:hover{
+  //  .box-shadow(4px 4px 5px rgba(0,0,0,.4));
+  //}
   h3 a{
     color: #3372a2;
-    transition: all 2s;
+    transition: all 1s;
   }
   h3 a:hover{
     text-decoration: none;

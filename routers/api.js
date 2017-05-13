@@ -119,6 +119,7 @@ api.post('/user/reg',function(req, res, next){
 api.post('/user/login',function(req, res, next){
     var username = req.body.loginusername;
     var password = req.body.loginpassword;
+    var checkbox = req.body.logincheckbox;
     // 查询数据库中用户名和密码是否同时存在，如果存在就登陆
     User.findOne({
         username:username,
@@ -131,9 +132,34 @@ api.post('/user/login',function(req, res, next){
             res.json(responseData);
             return;
         }
-        responseData.message = '登陆成功！';
-        res.json(responseData);
-        return;
+
+        User.findById(userInfo._id).then(function(admin){
+            responseData.isAdmin = admin.isAdmin
+            responseData.message = '登陆成功！';
+            responseData.userInfo = {
+                _id:userInfo._id,
+                username:userInfo.username,
+            }
+            // 保存登陆状态，默认浏览器结束进程销毁
+            req.cookies.set('userInfo',JSON.stringify({
+                _id:userInfo._id,
+                username:userInfo.username,
+            }))
+            // 记住密码
+            if(checkbox == "on"){
+                req.cookies.set('userInfo',JSON.stringify({
+                    _id:userInfo._id,
+                    username:userInfo.username,
+                }),{
+                    // 销毁的毫秒数
+                    maxAge:604800000,
+                })
+            }
+
+            res.json(responseData);
+            return;
+        })
+
     })
 });
 // 验证码
@@ -143,7 +169,7 @@ api.get('/img',function(req, res, next){
     res.end(imgData.img.getFileData());
     imgStr = imgData.str;
     // 查看当前验证码
-    console.log(imgData.str);
+    // console.log(imgData.str);
 });
 // 验证码验证接口
 api.post('/img/verify',function(req, res, next){

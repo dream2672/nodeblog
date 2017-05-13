@@ -13,7 +13,11 @@ var swig = require("swig");
 var mongoose = require("mongoose");
 // 加载中间件，用于处理post提交过来的请求
 var bodyParser = require("body-parser");
-var path = require("path");
+// 加载cookies
+var Cookies = require("cookies");
+// 记得./是相对路径
+var User = require('./models/User');
+
 // 创建app应用
 var app = express();
 
@@ -42,16 +46,38 @@ swig.setDefaults({cache:false});
 
 //bodyParser设置
 app.use(bodyParser.urlencoded({extended:true}));
+// cookies设置
+app.use(function(req, res, next){
+    req.cookies = new Cookies(req, res);
+    // 解析用户登陆cookies信息.
+    req.userInfo = {};
+    if(req.cookies.get("userInfo")){
+        try{
+            req.userInfo = JSON.parse(req.cookies.get("userInfo"));
+            // 获取当前登陆用户是否是管理员
+            User.findById(req.userInfo._id).then(function(userInfo){
+                req.userInfo.isAdmin = Boolean(userInfo.isAdmin)
+                next();
+            })
+        }catch (e){
+            next();
+        }
+    }else{
+        next();
+    }
+})
 
-// 处理首页函数
-app.use("/",require("./routers/main"));
 // 处理后台请求函数
 app.use("/admin",require("./routers/admin"));
 // 处理api
 app.use("/api",require("./routers/api"));
 
+// 处理首页函数
+app.use("/",require("./routers/main"));
+
+
 // 连接数据库
-mongoose.connect('mongodb://localhost/:27017/blog',function(err){
+mongoose.connect('mongodb://122.228.180.10:27017/blog',function(err){
     if(err){
         console.log("数据库连接失败！");
     }else{

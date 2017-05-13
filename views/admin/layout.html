@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{{title.title}}-舍与得</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/admin.css">
+    <link rel="stylesheet" href="/public/css/font/iconfont.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--左边-->
+<div class="left">
+    <!--左边隐藏-->
+    <span class="left-bar" id="left-bar"><i class="iconfont" title="隐藏">&#xe612;</i></span>
+    <div id="left-hiden">
+        <h4>舍与得</h4>
+        <div class="logo"><a href="/"><img src="/public/img/admin/logo.gif" title="返回首页"></a></div>
+        <ul class="left-list" id="left-list">
+            <li><a href="/admin/list"><i class="iconfont" >&#xe600;</i> 文章管理</a>
+                <ul>
+                    <li><a href="/admin/article/list">文章列表</a></li>
+                    <li><a href="#">发布文章</a></li>
+                    <li><a href="#">修改文章</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:void(0);"><i class="iconfont" >&#xe60d;</i> 分类管理</a>
+                <ul>
+                    <li><a href="/admin/category/list">分类列表</a></li>
+                    <li><a href="/admin/category/add">添加分类</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="iconfont" >&#xe60d;</i> 用户管理</a>
+                <ul>
+                    <li><a href="/admin/user/list">用户列表</a></li>
+                    <li><a href="/admin/user/add">添加用户</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="iconfont" >&#xe607;</i> 留言管理</a>
+                <ul>
+                    <li><a href="#">留言列表</a></li>
+                    <li><a href="#">删除留言</a></li>
+                </ul>
+            </li>
+            <li><span><i class="iconfont">&#xe611;</i> 离开</span></li>
+        </ul>
+    </div>
+</div>
+<div class="right">
+    <div class="container-fluid main">
+        <div class="row my-row">
+            <div class=" col-lg-12 title">
+                <!--模拟面包屑-->
+                <a href="#" class="sm-bar" id="sm-bar"><i class="iconfont">&#xe7bd;</i></a>
+                <div class="hidden-sm hidden-xs title-left">
+                    <a href="/" title="首页"><i class="iconfont">&#xe603;</i></a>
+                    <a href="#" title="设置" class="title-a"><i class="iconfont">&#xe601;</i></a>
+                    <a href="#" title="邮件"><i class="iconfont">&#xe616;</i></a>
+                </div>
+                <div class="title-right">
+                    <input type="text" class="form-control search" placeholder="输入关键字">
+                    <div>
+                        <span title="管理员"><i class="iconfont">&#xe7e1;:</i>{% if userInfo.username %}欢迎 {{userInfo.username}}{% else%} 未登陆 {% endif%}</span>
+                        <a href="/out" title="退出"><i class="iconfont">&#xe62f;</i></a>
+                    </div>
+                </div>
+            </div>
+            <!--类容部分-->
+            <div class="col-lg-12 content" id="content">
+                <!--标题-->
+                {% block main %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="right"></div>
+<!-- JS部分-->
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery.validate.min.js"></script>
+<script src="/public/api/adminapi.js"></script>
+<script src="/public/js/admin.js"></script>
+{% block script %}{% endblock %}
+</body>
+</html>

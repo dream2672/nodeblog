@@ -15,6 +15,7 @@ window.onscroll = function () {
         $nav.css({"transition":"all 1s","background":"rgba(0,0,0,0)","opacity":"0"});
         $("#top").fadeIn();
     }
+
 }
 // 返回顶部
 $("#top").hover(function(){
@@ -26,4 +27,13 @@ $("#top").hover(function(){
 $("#top").click(function(){
     $('body,html').animate({ scrollTop: 0}, 500);
     return false;
+})
+
+$("#indexBar").click(function(){
+    console.log($(this).attr("on"))
+    $("#nav").css({"transition":"all 1s","background":"rgba(0,0,0,.7)","opacity":"1"})
+
+})
+$(".dropdown").click(function(){
+    $("#nav").css({"transition":"all 1s","background":"rgba(0,0,0,.7)","opacity":"1"})
 })

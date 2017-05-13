@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% set title={title:"文章列表"} %}
+{% block main %}
+<!--标题-->
+<div class="content-title">
+    <h3>文章管理</h3>
+    <div>
+        <ol class="breadcrumb">
+            <li>Home</li>
+            <li>文章管理</li>
+            <li class="active">文章列表</li>
+        </ol>
+    </div>
+</div>
+<!--列表-->
+<div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="hidden-xs hidden-sm">ID</th>
+            <th>标题</th>
+            <th class="hidden-xs hidden-sm">分类</th>
+            <th class="hidden-xs hidden-sm">时间</th>
+            <th>管理</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th class="hidden-xs hidden-sm">1</th>
+            <th>一个程序员的日常</th>
+            <th class="hidden-xs hidden-sm">Python</th>
+            <th class="hidden-xs hidden-sm">2016-12-2</th>
+            <th>
+                <a class="btn btn-default btn-xs" href="#" title="查看"><i class="iconfont">&#xe605;</i></a>
+                <a class="btn btn-info btn-xs" href="#" title="编辑"><i class="iconfont">&#xe604;</i></a>
+                <a class="btn btn-danger btn-xs" href="#" title="删除" ><i class="iconfont">&#xe636;</i></a>
+            </th>
+        </tr>
+        <tr>
+            <th class="hidden-xs hidden-sm">1</th>
+            <th>一个程序员的日常</th>
+            <th class="hidden-xs hidden-sm">Python</th>
+            <th class="hidden-xs hidden-sm">2016-12-2</th>
+            <th>
+                <a class="btn btn-default btn-xs" href="#" title="查看"><i class="iconfont">&#xe605;</i></a>
+                <a class="btn btn-info btn-xs" href="#" title="编辑"><i class="iconfont">&#xe604;</i></a>
+                <a class="btn btn-danger btn-xs" href="#" title="删除" ><i class="iconfont">&#xe636;</i></a>
+            </th>
+        </tr>
+        <tr>
+            <th class="hidden-xs hidden-sm">1</th>
+            <th>一个程序员的日常</th>
+            <th class="hidden-xs hidden-sm">Python</th>
+            <th class="hidden-xs hidden-sm">2016-12-2</th>
+            <th>
+                <a class="btn btn-default btn-xs" href="#" title="查看"><i class="iconfont">&#xe605;</i></a>
+                <a class="btn btn-info btn-xs" href="#" title="编辑"><i class="iconfont">&#xe604;</i></a>
+                <a class="btn btn-danger btn-xs" href="#" title="删除" ><i class="iconfont">&#xe636;</i></a>
+            </th>
+        </tr>
+        <tr>
+            <th class="hidden-xs hidden-sm">1</th>
+            <th>一个程序员的日常</th>
+            <th class="hidden-xs hidden-sm">Python</th>
+            <th class="hidden-xs hidden-sm">2016-12-2</th>
+            <th>
+                <a class="btn btn-default btn-xs" href="#" title="查看"><i class="iconfont">&#xe605;</i></a>
+                <a class="btn btn-info btn-xs" href="#" title="编辑"><i class="iconfont">&#xe604;</i></a>
+                <a class="btn btn-danger btn-xs" href="#" title="删除" ><i class="iconfont">&#xe636;</i></a>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--分页-->
+<div class="text-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">«</span>
+                </a>
+            </li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">»</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}

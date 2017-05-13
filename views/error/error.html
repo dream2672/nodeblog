@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>出错了-舍与得</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/error.css">
+
+</head>
+<body>
+<div class="container-fluid main">
+<section class="center">
+    <div class="row">
+        <div class="col-md-12">
+            <article>
+                <span class="header">{{error.state}}</span>
+                <span class="error" >ERROR</span>
+            </article>
+        </div>
+        <div class="col-md-12">
+            <article>
+                <img src="/public/img/error.png">
+            </article>
+        </div>
+        <div class="col-md-12">
+            <article>
+                <p>{{error.message}}
+                    <!--迷路了吗？也许我可以帮助!-->
+                    <a href="/">返回首页</a>
+                    {% if error.isAdmin %}
+                    <input type="hidden" class="hidden" isAdmin="1">
+                    <!--<a href="/admin"> 进入后台</a>-->
+                    {% else %}
+                    <a href="/login"> 登陆</a>
+                    <input type="hidden" class="hidden" isAdmin="0">
+                    {% endif %}
+                </p>
+            </article>
+        </div>
+        <div class="col-md-12 hidden-xs hidden-sm">
+            <article>
+                <form action="">
+                    <input type="text" id="search" name="search" class="srchFld" placeholder="" required />
+                    <button type="submit" class="srchBtn">搜索</button>
+                </form>
+            </article>
+        </div>
+    </div>
+
+
+
+
+</section>
+</div>
+<script>
+    window.onload = function(){
+        var span = document.getElementById("span");
+        var search = document.getElementById("search");
+        var isAdmin = document.getElementsByClassName("hidden")[0];
+        var value = isAdmin.getAttribute("isAdmin")
+        var time = null;
+        var sum = 400;
+        time = setInterval(function(){
+            sum--;
+            if(value == 1){
+                search.setAttribute("placeholder",sum + "秒后自动跳转到后台！")
+//            span.innerHTML = "跳转到首页" +sum;
+                if(sum == 0){
+                    window.location = '/admin'
+                    clearInterval(time);
+                }
+            }else{
+                search.setAttribute("placeholder",sum + "秒后自动跳转到首页！ 点击搜索！")
+//            span.innerHTML = "跳转到首页" +sum;
+                if(sum == 0){
+                    window.location = '/'
+                    clearInterval(time);
+                }
+            }
+
+        },1000)
+        search.onfocus = function () {
+            search.setAttribute("placeholder","迷路了吗？也许我可以帮助!")
+//            span.remove();
+            clearInterval(time);
+        }
+    }
+
+</script>
+</body>
+</html>
