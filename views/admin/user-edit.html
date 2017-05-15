@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% set title={title:"修改用户"} %}
+{% block main %}
+<!--标题-->
+<div class="content-title">
+    <h3>分类管理</h3>
+    <div>
+        <ol class="breadcrumb">
+            <li>Home</li>
+            <li>用户管理</li>
+            <li class="active">修改-{{user.username}}</li>
+        </ol>
+    </div>
+</div>
+<!--列表-->
+<div>
+    <!--这里不要写提交地址，那样后台就能直接获取到id-->
+    <form class="form-horizontal" method="post" id="categorForm">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="col-md-3 ">
+                    <label class="control-label">用户名:</label>
+                </div>
+                <div class="col-md-9">
+                    <p class="form-control-static">{{user.username}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 ">
+                    <label class="control-label">注册时间:</label>
+                </div>
+                <div class="col-md-9">
+                    <p class="form-control-static">{{user.regTime|date('Y-m-d H:i:s',-8*60)}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 ">
+                    <label for="email" class="control-label">邮箱:</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="email" id="email" value="{{user.email}}" placeholder="未填写">
+                </div>
+            </div>
+            <div class="form-group ">
+                <div class="col-md-3 ">
+                    <label class="control-label">管理员:</label>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="isadmin">
+                        {% if user.isAdmin %}
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        {% else %}
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-3">
+                    <input type="submit" class="btn btn-info" value="提交">
+                    <a href="/admin/user/list" class="btn btn-default" >返回</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

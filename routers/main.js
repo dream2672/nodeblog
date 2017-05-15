@@ -5,6 +5,7 @@
 var express = require("express");
 var main = express.Router();
 let Category = require("../models/Catrgory");
+let Article = require("../models/Acticle");
 
 
 
@@ -18,17 +19,21 @@ main.get('/',function(req, res, next){
     /*
      * 读取views下面的指定文件,并返回给客户端
      * */
-    Category.find().then(function(categorys){
-        res.render('main/index',{
-            userInfo:req.userInfo,
-            categorys:categorys,
+    Article.find().sort({_id:-1}).then(function(articles){
+        Category.find().sort({number:-1}).then(function(categorys){
+            res.render('main/index',{
+                userInfo:req.userInfo,
+                categorys:categorys,
+                articles:articles,
+            })
         })
     })
+
 
 })
 
 // 登陆页面
-main.get('/login',function(req, res, next){
+main.get('/login/',function(req, res, next){
     /*
      * 读取views下面的指定文件,并返回给客户端
      * */
@@ -38,6 +43,7 @@ main.get('/login',function(req, res, next){
         res.render('main/login')
     }
 });
+// 退出登陆
 main.get('/out',function(req, res, next){
     req.cookies.set('userInfo',null);
     res.redirect('/')

@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% set title={title:"添加分类"} %}
+{% set title={title:"修改分类"} %}
 {% block main %}
 <!--标题-->
 <div class="content-title">
@@ -8,20 +8,21 @@
         <ol class="breadcrumb">
             <li>Home</li>
             <li>分类管理</li>
-            <li class="active">添加分类</li>
+            <li class="active">修改-{{category.name}}</li>
         </ol>
     </div>
 </div>
 <!--列表-->
 <div>
-    <form class="form-horizontal" method="post" action="/admin/category/add" id="categorForm">
+    <!--这里不要写提交地址，那样后台就能直接获取到id-->
+    <form class="form-horizontal" method="post" id="categorForm">
         <div class="col-md-4">
             <div class="form-group">
                 <div class="col-md-3 ">
                     <label for="number" class="control-label">排序编号:</label>
                 </div>
                 <div class="col-md-9 error-p">
-                    <input type="text" class="form-control" name="number" id="number">
+                    <input type="text" class="form-control" name="number" id="number" value="{{category.number}}">
                 </div>
             </div>
             <div class="form-group">
@@ -29,7 +30,7 @@
                     <label for="categoryname" class="control-label">分类名称:</label>
                 </div>
                 <div class="col-md-9 error-p">
-                    <input type="text" class="form-control" name="categoryname" id="categoryname">
+                    <input type="text" class="form-control" name="categoryname" id="categoryname" value="{{category.name}}">
                 </div>
             </div>
             <div class="form-group">

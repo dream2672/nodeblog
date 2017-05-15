@@ -7,9 +7,12 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>{{title.title}}-舍与得</title>
     <!-- Bootstrap -->
+    {% block style %}
+    {% endblock %}
     <link rel="stylesheet" href="/public/css/bootstrap.css">
     <link rel="stylesheet" href="/public/css/admin.css">
     <link rel="stylesheet" href="/public/css/font/iconfont.css">
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,8 +33,7 @@
             <li><a href="/admin/list"><i class="iconfont" >&#xe600;</i> 文章管理</a>
                 <ul>
                     <li><a href="/admin/article/list">文章列表</a></li>
-                    <li><a href="#">发布文章</a></li>
-                    <li><a href="#">修改文章</a></li>
+                    <li><a href="#" id="articleAdd">发布文章</a></li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);"><i class="iconfont" >&#xe60d;</i> 分类管理</a>
@@ -43,7 +45,7 @@
             <li><a href="#"><i class="iconfont" >&#xe60d;</i> 用户管理</a>
                 <ul>
                     <li><a href="/admin/user/list">用户列表</a></li>
-                    <li><a href="/admin/user/add">添加用户</a></li>
+                    <!--<li><a href="/admin/user/add">添加用户</a></li>-->
                 </ul>
             </li>
             <li><a href="#"><i class="iconfont" >&#xe607;</i> 留言管理</a>
@@ -63,7 +65,7 @@
                 <!--模拟面包屑-->
                 <a href="#" class="sm-bar" id="sm-bar"><i class="iconfont">&#xe7bd;</i></a>
                 <div class="hidden-sm hidden-xs title-left">
-                    <a href="/" title="首页"><i class="iconfont">&#xe603;</i></a>
+                    <a href="/admin" title="首页"><i class="iconfont">&#xe603;</i></a>
                     <a href="#" title="设置" class="title-a"><i class="iconfont">&#xe601;</i></a>
                     <a href="#" title="邮件"><i class="iconfont">&#xe616;</i></a>
                 </div>
@@ -84,7 +86,22 @@
         </div>
     </div>
 </div>
+<!--小屏遮挡-->
 <div id="right"></div>
+<!-- Large modal -->
+<div  id="layout"  class="modal fade mymodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title text-center" id="modalTitle"></h4>
+            </div>
+            <div class="modal-body text-center" id="modalCenter"></div>
+        </div>
+    </div>
+</div>
+{% block modal %}
+{% endblock %}
 <!-- JS部分-->
 <script src="/public/js/jquery.js"></script>
 <script src="/public/js/bootstrap.min.js"></script>
@@ -92,5 +109,22 @@
 <script src="/public/api/adminapi.js"></script>
 <script src="/public/js/admin.js"></script>
 {% block script %}{% endblock %}
+<script>
+$("#articleAdd").click(function(){
+    var html = '<a href="/admin/article/editor" class="btn btn-info">富文本编辑</a> <a href="/admin/article/add" class="btn btn-danger">Markwon</a>'
+    $("#modalTitle").text("请选择编辑器版本");
+    $("#modalCenter").html(html);
+    $('#layout').modal('toggle');
+})
+//    删除弹出确认框
+$(".del").click(function(){
+    var url = $(this).attr("del");
+    var name = $(this).attr("delname");
+    var html = '<a  data-dismiss="modal" aria-label="Close" class="btn btn-info">返回列表</a> <a href='+ url +' class="btn btn-danger">确定删除</a>'
+    $("#modalTitle").text("确定删除-" + name);
+    $("#modalCenter").html(html);
+    $('#layout').modal('toggle');
+})
+</script>
 </body>
 </html>

@@ -11,5 +11,5 @@ module.exports = new mongoose.Schema({
        type:String,
         default:0,
     },
-    category:String,
+    name:String,
 })

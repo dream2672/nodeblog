@@ -8,29 +8,26 @@ window.onscroll = function () {
     if(t < 10){
         $nav.css({"transition":"all 1s","background":"rgba(0,0,0,0)"});
     }else if(t < $height-$nav.height()){
+        console.log("s")
         $nav.css({"transition":"all 1s","background":"rgba(0,0,0,.7)","opacity":"1"})
         // 返回顶部
-        $("#top").fadeOut();
+        $("#top").fadeOut()
+        // $("#top").stop(true).animate({right:"-60px"})
     }else if(t > $height-$nav.height()){
+        console.log("x")
         $nav.css({"transition":"all 1s","background":"rgba(0,0,0,0)","opacity":"0"});
-        $("#top").fadeIn();
+        $("#top").fadeIn()
+        // $("#top").stop(true).animate({right:"20px"})
     }
 
 }
-// 返回顶部
-$("#top").hover(function(){
-    $(this).css("background","rgba(0,0,0,.5)");
-},function(){
-    $(this).css("background","rgba(0,0,0,.2)");
-})
 // 点击返回顶部
 $("#top").click(function(){
     $('body,html').animate({ scrollTop: 0}, 500);
     return false;
 })
-
+// 修复导航
 $("#indexBar").click(function(){
-    console.log($(this).attr("on"))
     $("#nav").css({"transition":"all 1s","background":"rgba(0,0,0,.7)","opacity":"1"})
 
 })

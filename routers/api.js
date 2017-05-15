@@ -6,6 +6,7 @@ var express = require("express");
 var api = express.Router();
 // 导入模型
 var User = require('../models/User');
+let Category = require('../models/Catrgory');
 // 导入哈希
 var Hash = require('../method/hash');
 // 导入验证
@@ -24,36 +25,46 @@ api.use(function(req, res, next){
     }
     next();
 });
-/*
- 接收前台注册验证时候发来的请求，去数据库查询如果有就返回false，没有就返回true
+
+/**
+ * 用于vilidite验证调用  boole如果是true 是查询是不是有没有，没有就返回true
+ * 相反如果接收false 去数据库查询有没有，如果没有就返回false
+ * @param model 接收一个模型
+ * @param res  服务器响应
+ * @param obj  接收一个对象
+ * @param boole  接收boole 类型
  */
-api.post('/user/reg/username',function(req, res, next){
-    User.findOne({
-        username:req.body.username,
-    }).then(function(userInfo){
-        if(userInfo == null){
-            responseData.error = true;
-            res.json(responseData.error);
-        }else(
-            res.json(responseData.error)
-        );
+function vilidite(model, res, obj, boole){
+    model.findOne(obj).then(function(userInfo){
+        if(boole == true){
+            if(userInfo == null){
+                responseData.error = true;
+                res.json(responseData.error);
+                return;
+            }else {
+                res.json(responseData.error);
+            };
+        }else{
+            if(userInfo == null){
+                res.json(responseData.error);
+                return;
+            }else {
+                responseData.error = true;
+                res.json(responseData.error);
+            };
+        }
+
     });
+}
+// 接收前台注册验证时候发来的请求，去数据库查询如果有就返回false，没有就返回true
+api.post('/user/reg/username',function(req, res){
+    let obj = {username:req.body.username}
+    vilidite(User, res, obj, true);
 });
-/*
- 接收前台登陆发来的用户名查询发来的请求，查询没有就返回false ，有就返回true
- */
+//接收前台登陆发来的用户名查询发来的请求，查询没有就返回false ，有就返回true
 api.post('/user/login/username',function(req, res, next){
-    User.findOne({
-        username:req.body.loginusername,
-    }).then(function(userInfo){
-        if(userInfo == null){
-            res.json(responseData.error);
-            return;
-        }else {
-            responseData.error = true;
-            res.json(responseData.error);
-        };
-    });
+    let obj = {username:req.body.loginusername}
+    vilidite(User, res, obj, false);
 });
 /**
  * 注册逻辑
@@ -134,6 +145,7 @@ api.post('/user/login',function(req, res, next){
         }
 
         User.findById(userInfo._id).then(function(admin){
+            // 判断是否是管理员
             responseData.isAdmin = admin.isAdmin
             responseData.message = '登陆成功！';
             responseData.userInfo = {
@@ -183,4 +195,13 @@ api.post('/img/verify',function(req, res, next){
         res.json(responseData.error);
     }
 })
+
+// 后台api验证
+
+//接收后台添加分类发来的请求，去数据库查询如果有就返回false，没有就返回true；
+// todo 目前处于关闭状态 问题修改序号会无法提交
+api.post('/category/name/',function(req, res){
+    let obj = {name:req.body.categoryname}
+    vilidite(Category, res, obj, true);
+});
 module.exports = api;

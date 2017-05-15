@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% import 'helper.html' as helper %}
 {% set title={title:"用户列表"} %}
 {% block main %}
 <!--标题-->
@@ -27,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for user in users %}
+        {% for user in models %}
             <tr>
                 <th class="hidden-xs ">{{loop.index}}</th>
                 <th class="hidden-xs">{{user._id.toString()}}</th>
@@ -42,8 +43,8 @@
                     {% endif %}
                 </th>
                 <th>
-                    <a class="btn btn-info btn-xs" href="#" title="编辑"><i class="iconfont">&#xe604;</i></a>
-                    <a class="btn btn-danger btn-xs" href="#" title="删除" ><i class="iconfont">&#xe636;</i></a>
+                    <a class="btn btn-info btn-xs" href="/admin/user/edit?id={{user._id.toString()}}" title="编辑"><i class="iconfont">&#xe604;</i></a>
+                    <a class="btn btn-danger btn-xs del" del="/admin/user/del?id={{user._id.toString()}}" delname="{{user.username}}"  title="删除" ><i class="iconfont">&#xe636;</i></a>
                 </th>
             </tr>
         {% endfor %}
@@ -51,25 +52,6 @@
     </table>
 </div>
 <!--分页-->
-<div class="text-center">
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">«</span>
-                </a>
-            </li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">»</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+<!--默认不给就是当前目录-->
+{{ helper.render_page() }}
 {% endblock %}

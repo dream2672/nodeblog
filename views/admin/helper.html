@@ -1,0 +1,23 @@
+{% macro render_page(url) %}
+{% if sum > 1 %}
+<div class="text-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li {% if page == 1 %} class="disabled" {% endif %}>
+                <a href="{{url}}?page={{page-1}}" aria-label="Previous">
+                    <span aria-hidden="true">«</span>
+                </a>
+            </li>
+            {% for lpage in pages %}
+            <li {% if lpage == page %}class="active" {% endif %}><a href="{{url}}?page={{lpage}}" >{{lpage}}</a></li>
+            {% endfor %}
+            <li {% if page >= sum %} class="disabled" {% endif %}>
+                <a href="{{url}}?page={{page+1}}" aria-label="Next">
+                    <span aria-hidden="true">»</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endif %}
+{% endmacro %}

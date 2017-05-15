@@ -1,0 +1,115 @@
+
+{% extends 'layout.html' %}
+{% set title={title:"添加文章-editor"} %}
+{% block style %}
+<!--富文本-->
+<script src="/public/js/ueditor/ueditor.config.js"></script>
+<script src="/public/js/ueditor/ueditor.all.js"></script>
+<script src="/public/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+{% endblock %}
+{% block main %}
+<!--标题-->
+<div class="content-title">
+    <h3>文章管理</h3>
+    <div>
+        <ol class="breadcrumb">
+            <li>Home</li>
+            <li>文章管理</li>
+            <li class="active">添加文章</li>
+        </ol>
+    </div>
+</div>
+<!--列表-->
+<!--发布文章-->
+<div class="add-active">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class=" col-md-6 col-xs-6">
+                <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题" value="{{article.title}}">
+                <input type="hidden" id="_id" value="{{article._id.toString()}}">
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <div class="col-md-2 hidden-sm hidden-xs">
+                    <label class="control-label">分类名称:</label>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="categoryid" id="categoryid">
+                        {% for category in categorys %}
+                            {% if article.category._id.toString() ==  category._id.toString() %}
+                                <option value="{{category._id.toString()}}" selected>{{category.name}}</option>
+                            {% else %}
+                                <option value="{{category._id.toString()}}">{{category.name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group myeditor">
+            <div class="col-sm-12">
+                <textarea id="editor" type="text/plain" class="editor" value="">{{article.content}}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class=" col-md-6">
+                <input type="button" class="btn btn-info"  id="submit" value="发布文章" >
+                <a href="/admin/article/list" class="btn btn-default"> 返回列表</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var editor = UE.getEditor('editor');
+    $(document).ready(function(){
+        $("#submit").click(function() {
+            var html = '<div class="progress"><div class="progress-bar progress-bar-success progress-bar-striped" id="progress" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div></div>'
+            $("#modalTitle").text("正在提交...");
+            $("#modalCenter").html(html);
+            $('#layout').modal('toggle');
+            var time = null;
+            var time2 = null;
+            var sum = 1;
+            time = setInterval(function(){
+                sum = sum +5
+                if(sum >= 100){
+                    sum = 100;
+                    clearInterval(time);
+                    time2 = setTimeout(function () {
+                        clearInterval(time2);
+                        window.location = '/admin/article/list';
+
+                    },500)
+                }
+                $("#progress").attr("style","width:" + sum +"%");
+            },100);
+            // 当打开框时候执行
+            $('#layout').on('shown.bs.modal', function () {
+                // 执行一些动作...
+                var title = $("#title").val();
+                var content = editor.getContent();
+                var categoryid = $("#categoryid").val();
+                var id = $("#_id").val();
+                $.ajax({
+                    type:'post',
+                    url:'/admin/article/edit',
+                    data:{
+                        id:id,
+                        title:title,
+                        content:content,
+                        categoryid:categoryid,
+                    },
+                    success:function (message) {
+                        $("#modalTitle").text(message.message);
+                    }
+                })
+
+            })
+        })
+    })
+</script>
+
+{% endblock %}

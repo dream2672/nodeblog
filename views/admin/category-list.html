@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% set title={title:"分类列表"} %}
+{% import 'helper.html' as helper %}
 {% block main %}
 <!--标题-->
 <div class="content-title">
@@ -18,22 +19,22 @@
         <thead>
         <tr>
             <th class="hidden-xs hidden-sm">序号</th>
-            <th class="hidden-xs hidden-sm">编号</th>
+            <th>编号</th>
             <th class="hidden-xs hidden-sm">ID</th>
             <th>分类</th>
             <th>管理</th>
         </tr>
         </thead>
         <tbody>
-        {% for category in categorys %}
+        {% for category in models %}
             <tr>
                 <th class="hidden-xs hidden-sm">{{loop.index}}</th>
-                <th class="hidden-xs hidden-sm">{{category.number}}</th>
+                <th>{{category.number}}</th>
                 <th class="hidden-xs hidden-sm">{{category._id.toString()}}</th>
-                <th>{{category.category}}</th>
+                <th>{{category.name}}</th>
                 <th>
-                    <a class="btn btn-info btn-xs" href="#" title="编辑"><i class="iconfont">&#xe604;</i></a>
-                    <a class="btn btn-danger btn-xs" href="#" title="删除" ><i class="iconfont">&#xe636;</i></a>
+                    <a class="btn btn-info btn-xs" href="/admin/category/edit?id={{category._id.toString()}}" title="编辑"><i class="iconfont">&#xe604;</i></a>
+                    <a class="btn btn-danger btn-xs del" del="/admin/category/del?id={{category._id.toString()}}" delname="{{category.name}}" title="删除" ><i class="iconfont">&#xe636;</i></a>
                 </th>
             </tr>
         {% endfor %}
@@ -41,25 +42,5 @@
     </table>
 </div>
 <!--分页-->
-<div class="text-center">
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">«</span>
-                </a>
-            </li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">»</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+{{ helper.render_page() }}
 {% endblock %}

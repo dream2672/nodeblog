@@ -18,62 +18,69 @@ ul{
   padding: 0;
   line-height: 50px;
 }
-li a:hover {
-  color: #fff;
-}
 
 /* 搜索对齐 */
 form > * {
   vertical-align: middle;
 }
-.srchBtn
-{
-  border: 0;
-  border-radius: 7px;
-  padding: 0 17px;
-  background: #e74c3c;
-  width: 99px;
-  border-bottom: 5px solid #c0392b;
-  color: #fff;
-  height: 65px;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+@media screen and(max-width: 768px) {
+  body .center .header{
+    font-size: 10.5rem;
+  }
+  body .center .error{
+    font-size: 5rem;
+  }
+  body .sm span:first-child{
+    display: inline-block;
+    margin:-30px 0;
 
-.srchBtn:active
-{
-  border-bottom: 0px solid #c0392b;
+  }
+  body .sm span:last-child{
+    display: inline-block;
+    margin:-10px 0;
+    text-shadow: 0px 3px 0px #7f8c8d;
+  }
+  body .center .foot{
+    margin:0;
+    div{
+      text-align: center;
+    }
+  }
 }
+// 部分全屏浏览器优化
+@media screen and(min-height:550px) and(max-width: 768px) {
+  body .sm span:first-child{
+    display: inline-block;
+    margin:0 0;
 
-.srchFld
-{
-  border: 0;
-  border-radius: 7px;
-  padding: 0 17px;
-  max-width: 404px;
-  width: 40%;
-  border-bottom: 5px solid #bdc3c7;
-  height: 60px;
-  color: #7f8c8d;
-  font-size: 19px;
+  }
+  body .sm span:last-child{
+    display: inline-block;
+    margin:0 0;
+    text-shadow: 0px 3px 0px #7f8c8d;
+  }
+  body .center .foot{
+    margin:50px 0 30px 0;
+    div{
+      text-align: center;
+    }
+  }
 }
-
-.srchFld:focus
-{
-  outline-color: rgba(255, 255, 255, 0);
+.show{
+  text-shadow: 0 2px 0 #151717;
+  font-weight: 900;
+  background-color: rgba(0,0,0,.1);
 }
-//.main{
-//  padding:0;
-//}
 .center {
   text-align: center;
-  .header
-  {
+  // 404
+  .header {
     font-size: 13rem;
     font-weight: 700;
     margin:-20px 0 0 0;
     text-shadow: 0px 10px 0px #7f8c8d;
   }
+  // error
   .error
   {
     margin: -70px 0 2% 0;
@@ -81,30 +88,46 @@ form > * {
     text-shadow: 0px 5px 0px #7f8c8d;
     font-weight: 100;
   }
+  // 搜索框
+  .srchFld {
+    border: 0;
+    border-radius: 7px;
+    padding: 0 17px;
+    max-width: 404px;
+    width: 40%;
+    border-bottom: 5px solid #bdc3c7;
+    height: 60px;
+    color: #7f8c8d;
+    font-size: 19px;
+    &:focus{
+      outline-color: rgba(255, 255, 255, 0);
+    }
+  }
+  //搜索按钮
+  .srchBtn {
+    border: 0;
+    border-radius: 7px;
+    padding: 0 17px;
+    background: #e74c3c;
+    width: 99px;
+    border-bottom: 5px solid #c0392b;
+    color: #fff;
+    height: 65px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    &:active{
+      border-bottom: 0px solid #c0392b;
+    }
+  }
+  .foot{
+    margin: 100px 0 30px 0;
+    a:hover{
+      text-decoration: none;
+      color: #e8e8e8;
+    }
+  }
+  .sm-message{
+    padding-right:0;
+  }
 }
-#span{
-  color: rgba(255,255,255,.9);
-  position: absolute;
-  top:0;
-  left:50%;
-  margin-left:-100px;
-  height:40px;
-  width: 200px;
-  background-color: rgba(0,0,0,.1);
-  text-align: center;
-  line-height: 40px;
-  border-radius: 10px;
-  margin-left:-150px;
-  font-weight: 900;
-  font-size: 1.5rem;
-}
-.show{
-  text-shadow: 0 2px 0 #151717;
-  font-weight: 900;
-  background-color: rgba(0,0,0,.1);
-}
-#p{
-  position: relative;
-  height:40px;
-  //margin-top:40px;
-}
+

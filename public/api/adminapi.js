@@ -33,8 +33,9 @@ $(document).ready(function(){
                 // required: true,
                 email: true
             },
+            // 验证码
             verify:{
-                required: true,   //是否必填
+                required: false,   //是否必填
                 remote:{
                     type:'post',
                     url:'/api/img/verify',
@@ -125,8 +126,9 @@ $(document).ready(function(){
                 required: true,   //是否必填
 
             },
+            // 验证码
             loginverify:{
-                required: true,   //是否必填
+                required: false,   //是否必填
                 remote:{
                     type:'post',
                     url:'/api/img/verify',
@@ -180,19 +182,33 @@ $(document).ready(function(){
     })
     // 验证后台分类添加界面
     $("#categorForm").validate({
-        dubug:true,
         rules:{
+            number:{
+                digits:true
+            },
             categoryname:{
                 required:true,
                 minlength:2,
                 maxlength:10,
+                // 关闭名字重复验证
+                // remote:{
+                //     type:'post',
+                //     url:'/api/category/name',
+                //     loginusername:function(){
+                //         return $("#categoryname").val();
+                //     },
+                // },
             },
         },
         messages:{
+            number:{
+                digits:"*必须填入整数"
+            },
             categoryname:{
                 required:"*分类必填",
                 minlength:"*分类不能少于2个字符",
                 maxlength:"*分类不能超过10个字符",
+                remote:"*分类名称已存在！"
             }
         }
     })
@@ -206,8 +222,9 @@ $(document).ready(function(){
     proof("loginusername");
     proof("loginpassword");
     proof("loginverify");
-    // 后台
+    // 后台分类验证
     proof("categoryname");
+    proof("number");
     /**
      *
      * @param id 需要验证的id

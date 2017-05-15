@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>出错了-舍与得</title>
+    <title>{{error.message}}-舍与得</title>
     <link rel="stylesheet" href="/public/css/bootstrap.css">
     <link rel="stylesheet" href="/public/css/error.css">
 
@@ -14,7 +14,7 @@
 <section class="center">
     <div class="row">
         <div class="col-md-12">
-            <article>
+            <article class="sm">
                 <span class="header">{{error.state}}</span>
                 <span class="error" >ERROR</span>
             </article>
@@ -24,10 +24,11 @@
                 <img src="/public/img/error.png">
             </article>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 foot">
             <article>
-                <p>{{error.message}}
-                    <!--迷路了吗？也许我可以帮助!-->
+                <div class="col-sm-12 col-md-6 text-right sm-message">{{error.message}}</div>
+                <!--迷路了吗？也许我可以帮助!-->
+                <div class="col-sm-12 col-md-6 text-left sm-back">
                     <a href="/">返回首页</a>
                     {% if error.isAdmin %}
                     <input type="hidden" class="hidden" isAdmin="1">
@@ -36,7 +37,7 @@
                     <a href="/login"> 登陆</a>
                     <input type="hidden" class="hidden" isAdmin="0">
                     {% endif %}
-                </p>
+                </div>
             </article>
         </div>
         <div class="col-md-12 hidden-xs hidden-sm">
@@ -56,12 +57,12 @@
 </div>
 <script>
     window.onload = function(){
-        var span = document.getElementById("span");
+//        var span = document.getElementById("span");
         var search = document.getElementById("search");
         var isAdmin = document.getElementsByClassName("hidden")[0];
         var value = isAdmin.getAttribute("isAdmin")
         var time = null;
-        var sum = 400;
+        var sum = 4;
         time = setInterval(function(){
             sum--;
             if(value == 1){

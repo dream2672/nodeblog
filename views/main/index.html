@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 {% set title={title:"首页"} %}
-
+{% block style %}
+<!--<link rel="stylesheet" href="/public/js/easy-markdown-master/lib/editor.css">-->
+{% endblock %}
 {% block main %}
 <div class="container">
     <div class="row">
@@ -12,8 +14,9 @@
             <div class="catrgory main-title">
                 <h3>文章分类</h3>
                 <div>
+                    <a href="/">全部文章</a>
                     {% for category in categorys %}
-                        <a href="#">{{category.category}}</a>
+                        <a href="/admin/category?name={{category._id.toString()}}">{{category.name}}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -22,22 +25,23 @@
     <div class="row main">
         <!--正文左边-->
         <div class="col-md-12 col-lg-9">
-            <div></div>
-            <div class="content main-title">
-            <h3><a href="#">标题测试</a></h3>
-            <div class="article">
-                <div class="article-top">
-                    <i class="iconfont">&#xe615;</i>
-                    <span class="time" title="发表时间">2016-4-9</span>
-                    <i class="iconfont">&#xe63b;</i>
-                    <span title="浏览次数">20</span>
-                    <span class="article-tar"><a href="#">Python</a></span>
+            <!--<div></div>-->
+            {% for article in articles %}
+                <div class="content main-title">
+                <h3><a href="#">{{article.title}}</a></h3>
+                <div class="article">
+                    <div class="article-top">
+                        <i class="iconfont">&#xe615;</i>
+                        <span class="time" title="发表时间">2016-4-9</span>
+                        <i class="iconfont">&#xe63b;</i>
+                        <span title="浏览次数">20</span>
+                        <span class="article-tar"><a href="#">Python</a></span>
+                    </div>
+
+                    <div class="article-text" id="preview">{{article.content | safe }}</div>
                 </div>
-                <div class="article-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus earum facilis fugiat ipsa
-                    itaque possimus recusandae rem saepe ut voluptatum! Amet consequatur hic, obcaecati sint
-                    temporibus voluptas? Amet, deserunt, velit!</div>
-            </div>
-        </div>
+                </div>
+            {% endfor %}
         </div>
         <!--正文右边-->
         <div class="col-lg-3 visible-lg">
@@ -45,8 +49,9 @@
             <div class="sidebar catrgory main-title">
                 <h3>文章分类</h3>
                 <div>
+                    <a href="/">全部文章</a>
                     {% for category in categorys %}
-                        <a href="#">{{category.category}}</a>
+                        <a href="/admin/category?name={{category._id.toString()}}">{{category.name}}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -54,9 +59,9 @@
                 <h3>最新文章</h3>
                 <div class="new-article">
                     <ul>
-                        <li><a href="#">测试</a></li>
-                        <li><a href="#">测试</a></li>
-                        <li><a href="#">测试</a></li>
+                        {% for article in articles %}
+                            <li><a href="#">{{article.title}}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
