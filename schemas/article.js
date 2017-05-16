@@ -9,7 +9,9 @@ module.exports = new mongoose.Schema({
     author:String,
     // 标题
     title:String,
+    // 摘要
     // 关联字段 内容分类id
+
     category:{
         // 类型是一个引用
         type:mongoose.Schema.Types.ObjectId,
@@ -27,5 +29,6 @@ module.exports = new mongoose.Schema({
     count:{
         type:String,
         default:0,
-    }
+    },
+    digest:String,
 })

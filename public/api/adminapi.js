@@ -191,13 +191,13 @@ $(document).ready(function(){
                 minlength:2,
                 maxlength:10,
                 // 关闭名字重复验证
-                // remote:{
-                //     type:'post',
-                //     url:'/api/category/name',
-                //     loginusername:function(){
-                //         return $("#categoryname").val();
-                //     },
-                // },
+                remote:{
+                    type:'post',
+                    url:'/api/category/name',
+                    loginusername:function(){
+                        return $("#categoryname").val();
+                    },
+                },
             },
         },
         messages:{

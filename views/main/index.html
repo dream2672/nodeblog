@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 {% set title={title:"首页"} %}
+{% import '../admin/helper.html' as helper %}
 {% block style %}
-<!--<link rel="stylesheet" href="/public/js/easy-markdown-master/lib/editor.css">-->
+<!--<link rel="stylesheet" href="/public/Makisu/css/style.css">-->
 {% endblock %}
 {% block main %}
 <div class="container">
@@ -28,42 +29,57 @@
             <!--<div></div>-->
             {% for article in articles %}
                 <div class="content main-title">
-                <h3><a href="#">{{article.title}}</a></h3>
+                <h3><a href="article?id={{article._id.toString()}}" class="len">{{article.title}}</a></h3>
                 <div class="article">
                     <div class="article-top">
                         <i class="iconfont">&#xe615;</i>
-                        <span class="time" title="发表时间">2016-4-9</span>
+                        <span class="time" title="发表时间">{{article.creationTime|date('Y-m-d H:i:s',-8*60)}}</span>
                         <i class="iconfont">&#xe63b;</i>
-                        <span title="浏览次数">20</span>
-                        <span class="article-tar"><a href="#">Python</a></span>
+                        <span title="浏览次数">{{article.count}}</span>
+
                     </div>
 
-                    <div class="article-text" id="preview">{{article.content | safe }}</div>
+                    <div class="article-text" id="preview">{{article.digest | safe }}</div>
                 </div>
                 </div>
             {% endfor %}
+            <!--分页-->
+            {{ helper.render_page() }}
         </div>
+
         <!--正文右边-->
-        <div class="col-lg-3 visible-lg">
-            <!--分类部分-->
-            <div class="sidebar catrgory main-title">
-                <h3>文章分类</h3>
-                <div>
-                    <a href="/">全部文章</a>
+        <div class="col-lg-3 visible-lg sidebar">
+            <div class="s1">
+                <dl class="list maki sidebar-1">
+                    <dt>文章分类</dt>
+                    <dd><a href="/">全部文章</a></dd>
                     {% for category in categorys %}
-                        <a href="/admin/category?name={{category._id.toString()}}">{{category.name}}</a>
+                        <dd><a href="/admin/category?name={{category._id.toString()}}">{{category.name}}</a></dd>
                     {% endfor %}
-                </div>
+                </dl>
             </div>
-            <div class="sidebar main-title">
-                <h3>最新文章</h3>
-                <div class="new-article">
-                    <ul>
-                        {% for article in articles %}
-                            <li><a href="#">{{article.title}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
+            <div class="s2">
+                <dl class="list maki sidebar-2">
+                    <dt>最热文章</dt>
+                    {% for article in articles %}
+                        <dd><a href="#" class="sidlen">{{article.title}}</a></dd>
+                    {% endfor %}
+                </dl>
+            </div>
+            <div class="s3">
+                <dl class="list maki sidebar-3">
+                    <dt>Maki</dt>
+                    <dd><a href="#">Ana-kyu</a></dd>
+                    <dd><a href="#">Chutoro</a></dd>
+                    <dd><a href="#">Kaiware</a></dd>
+                    <dd><a href="#">Kampyo</a></dd>
+                    <dd><a href="#">Kappa</a></dd>
+                    <dd><a href="#">Natto</a></dd>
+                    <dd><a href="#">Negitoro</a></dd>
+                    <dd><a href="#">Oshinko</a></dd>
+                    <dd><a href="#">Otoro</a></dd>
+                    <dd><a href="#">Tekka</a></dd>
+                </dl>
             </div>
         </div>
     </div>

@@ -76,7 +76,9 @@ a:focus{
 .transition(@value){
   .pre(transition,@value);
 }
-
+.animation(@value){
+  .pre(animation,@value);
+}
 
 //登陆界面样式
 @media screen and (max-width: 800px) {
@@ -108,13 +110,50 @@ a:focus{
       right:5px;
     }
   }
-
 }
-.test{
-  background-color:#fff !important;
+// 自定义动画
+@-webkit-keyframes colors {
+  0% { .box-shadow(0 0 20px #39f)}
+  15% { .box-shadow(0 0 20px #F246C9)}
+  30% { .box-shadow(0 0 20px #4453F2)}
+  45% { .box-shadow(0 0 20px #44F262)}
+  60% { .box-shadow(0 0 20px #F257D4)}
+  75% { .box-shadow(0 0 20px #EDF255)}
+  90% { .box-shadow(0 0 20px #F20006)}
+  100% { .box-shadow(0 0 20px #39f)}
 }
 .login{
-  //.h_w(350px,@l_width);
+  .animation(colors 20s ease infinite normal);
+}
+@-webkit-keyframes bgcolors {
+  0% { background:#39f}
+  15% { background:#F246C9}
+  30% { background:#4453F2}
+  45% { background:#44F262}
+  60% { background:#F257D4}
+  75% { background:#EDF255}
+  90% { background:#F20006}
+  100% { background:#39f}
+}
+.bgcolor{
+  .animation(bgcolors 20s ease infinite normal);
+}
+@-webkit-keyframes color {
+  0% { color:#39f}
+  15% { color:#F246C9}
+  30% { color:#4453F2}
+  45% { color:#44F262}
+  60% { color:#F257D4}
+  75% { color:#EDF255}
+  90% { color:#F20006}
+  100% { color:#39f}
+}
+.color{
+  .animation(color 20s ease infinite normal);
+}
+
+//////
+.login{
   width: @l_width;
   padding:30px;
   position: absolute;
@@ -126,20 +165,6 @@ a:focus{
   background: url('/public/img/admin/mask.png');
   z-index: 2;
   .border-radius(10px);
-  //// 错误消息定位
-  //.error-p{
-  //  position: relative;
-  //  input{
-  //    position: relative;
-  //    left:0;
-  //  }
-  //  label{
-  //    color: #a94442;
-  //    position: absolute;
-  //    top:6px;
-  //    right:30px;
-  //  }
-  //}
   h3{
     margin-bottom:20px;
   }

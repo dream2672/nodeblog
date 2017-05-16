@@ -3,6 +3,8 @@
  */
 let express = require("express");
 let admin = express.Router();
+let trimHtml = require("trim-html");
+
 let User = require("../models/User");
 let Category = require("../models/Catrgory");
 let Article = require("../models/Acticle");
@@ -83,7 +85,6 @@ admin.get('/',function(req, res){
     })
 });
 
-
 // 文章列表
 admin.get('/article/list/',function(req, res){
     // 返回管理员信息给模版
@@ -112,6 +113,9 @@ admin.post('/article/add/',function(req, res, next){
     let editer = req.body.editer;
     let author = req.userInfo.username;
     let str="";
+    // console.log(content)
+    let digest = trimHtml(content, { limit: 200 });
+    // console.log(digest.html)
     // 判断编辑器 1代表editer编辑器
     if(editer == "1"){
         str =content;
@@ -125,6 +129,8 @@ admin.post('/article/add/',function(req, res, next){
         title:title,
         content:str,
         author:author,
+        digest:digest.html,
+        creationTime:new Date(),
     }).save();
     res.json({message:"提交成功..",code:1})
     // next();

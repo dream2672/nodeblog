@@ -37,7 +37,7 @@
                 <th class="hidden-xs hidden-sm">{{article.category.name}}</th>
                 <th class="hidden-xs hidden-sm">{{article.creationTime|date('Y-m-d H:i:s',-8*60)}}</th>
                 <th>
-                    <a class="btn btn-default btn-xs" href="#" title="查看"><i class="iconfont">&#xe605;</i></a>
+                    <a class="btn btn-default btn-xs" href="/article?id={{article._id.toString()}}" title="查看"><i class="iconfont">&#xe605;</i></a>
                     <a class="btn btn-info btn-xs" href="/admin/article/edit?id={{article._id.toString()}}" title="编辑"><i class="iconfont">&#xe604;</i></a>
                     <a class="btn btn-danger btn-xs del" del="/admin/article/del?id={{article._id.toString()}}" delname="{{article.title}}" title="删除" ><i class="iconfont">&#xe636;</i></a>
                 </th>

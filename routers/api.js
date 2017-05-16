@@ -117,6 +117,7 @@ api.post('/user/reg',function(req, res, next){
             username:username,
             password:Hash.hash(password),
             email:email,
+            regTime:new Data(),
         });
         return user.save();
         // 操作完成后走下面newUserInfo,是上面插入的数据
