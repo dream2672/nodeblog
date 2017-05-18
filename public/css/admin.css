@@ -586,5 +586,14 @@ a:focus {
   right: 30px;
 }
 .mymodal {
-  top: 30%;
+  top: 20%;
+}
+#addbtn {
+  position: fixed;
+  left: 50%;
+  margin-left: -40px;
+  bottom: 30px;
+}
+.editor {
+  height: 400px;
 }

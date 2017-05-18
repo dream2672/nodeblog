@@ -3,9 +3,7 @@
 {% set title={title:"添加文章-editor"} %}
 {% block style %}
 <!--富文本-->
-<script src="/public/js/ueditor/ueditor.config.js"></script>
-<script src="/public/js/ueditor/ueditor.all.js"></script>
-<script src="/public/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+<link rel="stylesheet" href="/public/js/edit/css/wangEditor.min.css">
 {% endblock %}
 {% block main %}
 <!--标题-->
@@ -47,7 +45,7 @@
         </div>
         <div class="form-group myeditor">
             <div class="col-sm-12">
-                <textarea id="editor" type="text/plain" class="editor" value="">{{article.content}}</textarea>
+                <textarea id="editor" type="text/plain" class="editor" >{{article.content}}</textarea>
             </div>
         </div>
         <div class="form-group">
@@ -60,16 +58,18 @@
 </div>
 {% endblock %}
 {% block script %}
+<script src="/public/js/edit/js/wangEditor.js"></script>
 <script>
-    //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-    var editor = UE.getEditor('editor');
+
     $(document).ready(function(){
+        var editor = new wangEditor('editor');
+        editor.create();
+
         $("#submit").click(function() {
             var html = '<div class="progress"><div class="progress-bar progress-bar-success progress-bar-striped" id="progress" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div></div>'
             $("#modalTitle").text("正在提交...");
             $("#modalCenter").html(html);
-            $('#layout').modal('toggle');
+            $('#adminlayout').modal('toggle');
             var time = null;
             var time2 = null;
             var sum = 1;
@@ -87,12 +87,13 @@
                 $("#progress").attr("style","width:" + sum +"%");
             },100);
             // 当打开框时候执行
-            $('#layout').on('shown.bs.modal', function () {
+            $('#adminlayout').on('shown.bs.modal', function () {
                 // 执行一些动作...
                 var title = $("#title").val();
-                var content = editor.getContent();
+                var content = editor.$txt.html();
                 var categoryid = $("#categoryid").val();
                 var id = $("#_id").val();
+                console.log(title,content,categoryid,id)
                 $.ajax({
                     type:'post',
                     url:'/admin/article/edit',

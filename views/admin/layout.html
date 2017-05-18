@@ -25,7 +25,7 @@
 <!--左边-->
 <div class="left">
     <!--左边隐藏-->
-    <span class="left-bar" id="left-bar"><i class="iconfont" title="隐藏">&#xe612;</i></span>
+    <span class="left-bar color" id="left-bar"><i class="iconfont" title="隐藏">&#xe612;</i></span>
     <div id="left-hiden">
         <h4>舍与得</h4>
         <div class="logo"><a href="/"><img src="/public/img/admin/logo.gif" title="返回首页"></a></div>
@@ -70,9 +70,16 @@
                     <a href="#" title="邮件"><i class="iconfont">&#xe616;</i></a>
                 </div>
                 <div class="title-right">
-                    <input type="text" class="form-control search" placeholder="输入关键字">
+                    {% if !f11%}
+                        <input type="text" class="form-control search" placeholder="输入关键字">
+                    {% endif %}
+
                     <div>
-                        <span title="管理员"><i class="iconfont">&#xe7e1;:</i>{% if userInfo.username %}欢迎 {{userInfo.username}}{% else%} 未登陆 {% endif%}</span>
+                        {% if f11%}
+                            <span class="color" id="f11">全屏</span>
+                            <span id="exitf11">退出全屏</span>
+                        {% endif %}
+                        <span title="管理员"><i class="iconfont">&#xe7e1;:</i>{% if username %}欢迎 {{username}}{% else%} 未登陆 {% endif%}</span>
                         <a href="/out" title="退出"><i class="iconfont">&#xe62f;</i></a>
                     </div>
                 </div>
@@ -89,7 +96,7 @@
 <!--小屏遮挡-->
 <div id="right"></div>
 <!-- Large modal -->
-<div  id="layout"  class="modal fade " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;">
+<div  id="adminlayout"  class="modal fade " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="display: none;">
     <div class="modal-dialog modal-sm mymodal" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -109,22 +116,5 @@
 <script src="/public/api/adminapi.js"></script>
 <script src="/public/js/admin.js"></script>
 {% block script %}{% endblock %}
-<script>
-$("#articleAdd").click(function(){
-    var html = '<a href="/admin/article/editor" class="btn btn-info">富文本编辑</a> <a href="/admin/article/add" class="btn btn-danger">Markwon</a>'
-    $("#modalTitle").text("请选择编辑器版本");
-    $("#modalCenter").html(html);
-    $('#layout').modal('toggle');
-})
-//    删除弹出确认框
-$(".del").click(function(){
-    var url = $(this).attr("del");
-    var name = $(this).attr("delname");
-    var html = '<a  data-dismiss="modal" aria-label="Close" class="btn btn-info">返回列表</a> <a href='+ url +' class="btn btn-danger">确定删除</a>'
-    $("#modalTitle").text("确定删除-" + name);
-    $("#modalCenter").html(html);
-    $('#layout').modal('toggle');
-})
-</script>
 </body>
 </html>

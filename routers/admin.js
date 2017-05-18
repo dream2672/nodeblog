@@ -9,8 +9,15 @@ let User = require("../models/User");
 let Category = require("../models/Catrgory");
 let Article = require("../models/Acticle");
 
+// 解码
+// todo 后台用户需要改进
+function hexToDec(str) {
+    str=str.replace(/\\/g,"%");
+    return unescape(str);
+}
+
 // 定义错误消息
-var error = {
+let error = {
     message:"",
     state:404,
     isAdmin:false,
@@ -66,6 +73,7 @@ function adminListPage(model,req,res,views,quantity,sort,populate){
         model.find().sort(sort).limit(limit).skip(skip).populate(populate).then(function(models){
             res.render(views,{
                 userInfo:req.userInfo,
+                username:hexToDec(req.userInfo.username + ''),
                 // 找到的表
                 models:models,
                 page:page,
@@ -82,6 +90,7 @@ admin.get('/',function(req, res){
     // 返回管理员信息给模版
     res.render('admin/index',{
         userInfo:req.userInfo,
+        username:hexToDec(req.userInfo.username + ''),
     })
 });
 
@@ -92,16 +101,22 @@ admin.get('/article/list/',function(req, res){
 });
 // markdwon版本 发布文章
 admin.get('/article/add/',function(req, res){
-    res.render('admin/article-add',{
-        userInfo:req.userInfo,
+    Category.find().sort({number:-1}).then(function (categorys) {
+        res.render('admin/article-add',{
+            username:hexToDec(req.userInfo.username + ''),
+            userInfo:req.userInfo,
+            categorys:categorys,
+            f11:true,
+        })
     })
 });
 // editor版本 发布文章
 admin.get('/article/editor/',function(req, res){
     Category.find().sort({number:-1}).then(function (categorys) {
         res.render('admin/article-editor',{
+            username:hexToDec(req.userInfo.username + ''),
             userInfo:req.userInfo,
-            categorys:categorys
+            categorys:categorys,
         })
     })
 
@@ -111,18 +126,22 @@ admin.post('/article/add/',function(req, res, next){
     let content = req.body.content;
     let categoryid = req.body.categoryid;
     let editer = req.body.editer;
-    let author = req.userInfo.username;
+    // todo 需要整理
+    let author = hexToDec(req.userInfo.username + '');
     let str="";
+    let digest = "";
     // console.log(content)
-    let digest = trimHtml(content, { limit: 200 });
+
     // console.log(digest.html)
     // 判断编辑器 1代表editer编辑器
     if(editer == "1"){
         str =content;
+        digest = trimHtml(content, { limit: 200 });
     }else{
         for ( let i = 0; i < content.length; i++){
             str = str + content[i];
-        }
+        };
+        digest = trimHtml(str, { limit: 200 });
     }
     new Article({
         category:categoryid,
@@ -133,8 +152,63 @@ admin.post('/article/add/',function(req, res, next){
         creationTime:new Date(),
     }).save();
     res.json({message:"提交成功..",code:1})
-    // next();
 });
+// 用户列表
+admin.get("/user/list/",function(req, res){
+    adminListPage(User, req, res, 'admin/user-list', 6, {_id:-1},'');
+});
+// 添加分类
+admin.get("/category/add/",function(req, res){
+    res.render('admin/category-add',{
+        userInfo:req.userInfo,
+        username:hexToDec(req.userInfo.username + ''),
+    });
+
+});
+admin.post("/category/add/",function(req, res, next){
+    let number = req.body.number;
+    let name = req.body.categoryname;
+    if(number == ""){
+        number = 0;
+    }
+    // new 一个新数据
+    let category = new Category({
+        number:number,
+        name:name,
+    });
+    // 保存
+    category.save();
+
+
+    res.redirect("/admin/category/list")
+    next();
+});
+// 分类列表
+admin.get("/category/list/",function(req, res){
+    adminListPage(Category, req, res, 'admin/category-list',6, {number:-1},'');
+});
+
+
+
+
+
+//判断是否是超级管理员
+admin.use(function(req, res, next){
+    error = {
+        message:"本操作需要超级管理员权限！",
+        state:"SOS",
+        isAdmin:true,}
+    if(!req.userInfo.Admin){
+        res.render('error/error',{
+            error:error,
+        })
+        return;
+    }
+    next();
+});
+
+
+
 // 编辑文章
 admin.get("/article/edit/",function(req, res){
     let id = req.query.id || '';
@@ -144,6 +218,7 @@ admin.get("/article/edit/",function(req, res){
         Category.find().then(function (categorys) {
             res.render("admin/article-edit",{
                 userInfo:req.userInfo,
+                username:hexToDec(req.userInfo.username + ''),
                 article:article,
                 categorys:categorys,
             })
@@ -176,10 +251,6 @@ admin.get("/article/del",function(req, res){
     })
 })
 
-// 用户列表
-admin.get("/user/list/",function(req, res){
-    adminListPage(User, req, res, 'admin/user-list', 6, {_id:-1},'');
-});
 // 修改用户
 admin.get("/user/edit",function(req, res){
     let id = req.query.id || '';
@@ -189,6 +260,7 @@ admin.get("/user/edit",function(req, res){
         console.log(user)
         res.render("admin/user-edit",{
             userInfo:req.userInfo,
+            username:hexToDec(req.userInfo.username + ''),
             user:user,
         })
     })
@@ -216,35 +288,6 @@ admin.get("/user/del",function (req, res) {
         res.redirect("/admin/user/list")
     })
 })
-// 分类列表
-admin.get("/category/list/",function(req, res){
-    adminListPage(Category, req, res, 'admin/category-list',6, {number:-1},'');
-});
-// 添加分类
-admin.get("/category/add/",function(req, res){
-    res.render('admin/category-add',{
-        userInfo:req.userInfo,
-    });
-
-});
-admin.post("/category/add/",function(req, res, next){
-    let number = req.body.number;
-    let name = req.body.categoryname;
-    if(number == ""){
-        number = 0;
-    }
-    // new 一个新数据
-    let category = new Category({
-        number:number,
-        name:name,
-    });
-    // 保存
-    category.save();
-
-
-    res.redirect("/admin/category/list")
-    next();
-});
 
 // 修改分类
 admin.get("/category/edit/",function(req, res){
@@ -253,6 +296,7 @@ admin.get("/category/edit/",function(req, res){
         _id:id
     }).then(function(category){
         res.render("admin/category-edit",{
+            username:hexToDec(req.userInfo.username + ''),
             userInfo:req.userInfo,
             category:category,
         })
@@ -283,8 +327,7 @@ admin.get("/category/del/",function(req, res){
     }).then(function () {
         res.redirect("/admin/category/list")
     })
-})
-
+});
 
 // 404页面
 admin.get("*",function(req, res){
@@ -298,4 +341,5 @@ admin.get("*",function(req, res){
         error:error,
     })
 })
+
 module.exports = admin;

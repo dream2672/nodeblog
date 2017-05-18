@@ -1,4 +1,4 @@
-{% macro render_page(url) %}
+{% macro main_page(url) %}
 {% if sum > 1 %}
 <div class="text-center">
     <nav aria-label="Page navigation">
@@ -12,28 +12,28 @@
             </li>
             {% else %}
             <li>
-                <a href="{{url}}?page={{page - 1}}" aria-label="Next">
+                <a href="{{url}}?category={{categoryid}}&page={{page - 1}}" aria-label="Next">
                     <span aria-hidden="true">«</span>
                 </a>
             </li>
             {% endif %}
             <!--中间部分-->
             {% for lpage in pages %}
-            <li {% if lpage == page %}class="active" {% endif %}><a href="{{url}}?page={{lpage}}" >{{lpage}}</a></li>
+            <li {% if lpage == page %}class="active" {% endif %}><a href="{{url}}?category={{categoryid}}&page={{lpage}}" >{{lpage}}</a></li>
             {% endfor %}
             <!--下一页-->
             {% if page >= sum %}
-            <li class="disabled">
-                <a href="javascript:;" aria-label="Next">
-                    <span aria-hidden="true">»</span>
-                </a>
-            </li>
+                <li class="disabled">
+                    <a href="javascript:;" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
             {% else %}
-            <li>
-                <a href="{{url}}?page={{page + 1}}" aria-label="Next">
-                    <span aria-hidden="true">»</span>
-                </a>
-            </li>
+                <li>
+                    <a href="{{url}}?category={{categoryid}}&page={{page + 1}}" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </nav>

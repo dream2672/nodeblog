@@ -6,19 +6,27 @@
         <!--正文左边-->
         <div class="col-md-12">
             <div class="content main-title">
-                <h3 class="len">{{article.title}}</h3>
+                <h3 class="len color">{{article.title}}</h3>
                 <div class="article">
                     <div class="article-top">
-                        <i class="iconfont">&#xe615;</i>
-                        <span class="time" title="发表时间">{{article.creationTime|date('Y-m-d H:i:s',-8*60)}}</span>
-                        <i class="iconfont">&#xe63b;</i>
-                        <span title="浏览次数">{{article.count}}</span>
+                        <span class="time label label-default" title="发表时间"><i class="iconfont">&#xe615;</i>&nbsp;{{article.creationTime|date('Y-m-d H:i:s',-8*60)}}</span>
+                        <span class="count label label-info" title="浏览次数"><i class="iconfont">&#xe63b;</i>&nbsp;{{article.count}}</span>
+                        <span class="title label label-danger">作者:{{article.author}}</span>
+                        <span class=" spanc label label-success bgcolor hidden-xs hidden-sm">{{article.category.name}}</span>
+                        {% if userInfo.isAdmin %}
+                            <span class=" spanc label bgcolor label-info hidden-xs hidden-sm"><a href="/admin/article/edit?id={{article._id.toString()}}">编辑文章</a></span>
+                        {% endif %}
                     </div>
                     <div class="article-text article-content">{{article.content | safe }}</div>
-                    <div class="text-right article-bottom">
+                    <div class="article-bottom text-center">
                         <a href="/">返回首页</a>
                     </div>
                 </div>
+            </div>
+
+            <div class="content ">
+
+
             </div>
         </div>
     </div>

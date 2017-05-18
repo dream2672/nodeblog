@@ -22,5 +22,9 @@ module.exports = new mongoose.Schema({
     regTime:{
         type:Date,
         default:  new Date(),
+    },
+    Admin:{
+        type:Boolean,
+        default:false,
     }
 });

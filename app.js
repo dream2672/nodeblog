@@ -6,20 +6,20 @@
  */
 
 // 加载express
-var express = require("express");
+let express = require("express");
 // 加载模版
-var swig = require("swig");
+let swig = require("swig");
 // 加载数据库
-var mongoose = require("mongoose");
+let mongoose = require("mongoose");
 // 加载中间件，用于处理post提交过来的请求
-var bodyParser = require("body-parser");
+let bodyParser = require("body-parser");
 // 加载cookies
-var Cookies = require("cookies");
+let Cookies = require("cookies");
 // 记得./是相对路径
-var User = require('./models/User');
+let User = require('./models/User');
 
 // 创建app应用
-var app = express();
+let app = express();
 
 // 设置静态文件托管,当用户请求以/public开头的url，直接返回
 app.use('/public',express.static(__dirname + '/public'));
@@ -36,7 +36,7 @@ app.engine('html',swig.renderFile);
 /* 注册所使用的模版引擎，第一给参数不能变，第二个上面设置的后缀必须一样
  * 注意这里是view engine
  */
-app.set('view engine','html')
+app.set('view engine','html');
 // 设置模版文件存放目录
 // 第一给参数不能变，第二个是目录路径
 app.set('views', __dirname + '/views');
@@ -56,7 +56,8 @@ app.use(function(req, res, next){
             req.userInfo = JSON.parse(req.cookies.get("userInfo"));
             // 获取当前登陆用户是否是管理员
             User.findById(req.userInfo._id).then(function(userInfo){
-                req.userInfo.isAdmin = Boolean(userInfo.isAdmin)
+                req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
+                req.userInfo.Admin = Boolean(userInfo.Admin);
                 next();
             })
         }catch (e){
@@ -83,7 +84,7 @@ mongoose.connect('mongodb://122.228.180.10:27017/blog',function(err){
     }else{
         console.log("数据库已经成功连接！");
         // 监听http请求
-        app.listen(3000);
+        app.listen(4000);
         console.log("服务器成功启动:http://127.0.0.1:3000")
     }
 });

@@ -106,7 +106,7 @@ $(document).ready(function(){
         invalidHandler: function(form, validator) {  //不通过回调
             return false;
         }
-    })
+    });
     // 验证登陆界面
     $("#loginform").validate({
         // debug:true,
@@ -179,11 +179,12 @@ $(document).ready(function(){
         invalidHandler: function(form, validator) {  //不通过回调
             return false;
         }
-    })
+    });
     // 验证后台分类添加界面
     $("#categorForm").validate({
         rules:{
             number:{
+                // 必须是数字
                 digits:true
             },
             categoryname:{
@@ -211,7 +212,72 @@ $(document).ready(function(){
                 remote:"*分类名称已存在！"
             }
         }
-    })
+    });
+   // 验证文章发布富文本
+
+    // todo 这里目前有bug
+    $("#edirotForm").validate({
+        // dubug:true,
+        rules:{
+            edittitle:{
+                required:true,
+                minlength:2,
+                maxlength:30,
+            },
+        },
+        messages:{
+            edittitle:{
+                required:"*标题必填",
+                minlength:"*标题不能低于2个字符",
+                maxlength:"*标题不能大于30个字符",
+            },
+        },
+    });
+
+    // 验证文章发布 markdwon
+    $("#addForm").validate({
+        rules:{
+            title:{
+                required:true,
+                minlength:2,
+                maxlength:30,
+            },
+        },
+        messages:{
+            title:{
+                required:"*标题必填",
+                minlength:"*标题不能低于2个字符",
+                maxlength:"*标题不能大于30个字符",
+            }
+        },
+        submitHandler: function(form) {
+            //通过之后回调
+            var markdown = new Reader("mark");
+            var title = $("#title").val();
+            var content = markdown.getHtml();
+            var categoryid = $("#categoryid").val();
+            $.ajax({
+                type:'post',
+                url:'/admin/article/add',
+                data:{
+                    title:title,
+                    content:content,
+                    categoryid:categoryid,
+                    editer:"0",
+                },
+                success:function (message) {
+                    $("#addmodalTitle").text(message.message);
+                    if(message.code){
+                        var time = null;
+                        time = setTimeout(function(){
+                            window.location = "/admin/article/list";
+                            clearTimeout(time);
+                        },1000)
+                    }
+                }
+            })
+        }
+    });
     // 验证框颜色
     proof("username");
     proof("password");
@@ -225,6 +291,8 @@ $(document).ready(function(){
     // 后台分类验证
     proof("categoryname");
     proof("number");
+    // 后台文章
+    proof("title");
     /**
      *
      * @param id 需要验证的id
@@ -271,15 +339,3 @@ $(document).ready(function(){
         return false;
     });
 })
-/**
- * ajax以get方式请求
- * @param url 请求地址
- * @param object 成功执行的函数
- */
-function getAjax(url,object){
-    $.ajax({
-        type:'get',
-        url:url,
-        success:object,
-    })
-}

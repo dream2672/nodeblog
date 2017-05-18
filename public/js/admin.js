@@ -82,6 +82,9 @@ $(document).ready(function(){
 
         var contentHeight = clientHeight - 65;
         $("#content").css({"min-height":contentHeight + "px"});
+        // markdwon 高度
+        $("#mark").css({"height":contentHeight-65 + "px"});
+        $("#preview").css({"height":contentHeight-65 + "px"});
 
         //蒙版高度
         var right = $(".main").height()
@@ -116,40 +119,66 @@ $(document).ready(function(){
 
     // 侧边栏按钮
     $("#left-bar").click(function(){
-        if($left.attr("on") == 1 || $left.attr("on") == undefined){
-            $("#left-hiden").hide();
-            $left.animate({"width":"0",}).attr("on","0");
-            $(".right").animate({"margin-left":"10px"});
+        leftBar()
+    })
+    // 弹框
 
-            $("#left-bar").html("<i class='iconfont' title='显示'>&#xe61e;</i>");
 
-        }else if($left.attr("on") == 0){
-            $left.animate({"width":"100px"}).attr("on","1");
-            $(".right").animate({"margin-left":"100px"});
-            $("#left-hiden").show(300);
-            $("#left-bar").html("<i class='iconfont' title='隐藏'>&#xe612;</i>");
-        }
+    $("#articleAdd").click(function(){
+        var html = '<a href="/admin/article/editor" class="btn btn-info">富文本编辑</a> <a href="/admin/article/add" class="btn btn-danger">Markwon</a>'
+        $("#modalTitle").text("请选择编辑器版本");
+        $("#modalCenter").html(html);
+        $('#adminlayout').modal('toggle');
+    })
+//    删除弹出确认框
+    $(".del").click(function(){
+        var url = $(this).attr("del");
+        var name = $(this).attr("delname");
+        var html = '<a  data-dismiss="modal" aria-label="Close" class="btn btn-info">返回列表</a> <a href='+ url +' class="btn btn-danger">确定删除</a>'
+        $("#modalTitle").text("确定删除-" + name);
+        $("#modalCenter").html(html);
+        $('#adminlayout').modal('toggle');
     })
 
-    // login
-
-    // var logoTime = null;
-    // $(".logo").hover(function(){
-    //     var angle = 0;
-    //     logoTime = setInterval(function(){
-    //
-    //         if(angle >= 90){
-    //             angle -= 1
-    //             $(".logo").css({"transform":"rotate("+ angle+"deg)"});
-    //         }else{
-    //             angle+=1;
-    //             $(".logo").css({"transform":"rotate("+ angle+"deg)"});
-    //         }
-    //     },100);
-    // },function(){
-    //     clearInterval(logoTime);
-    //     $(".logo").css({"transform":"rotate(0deg)"});
-    // })
 
 })
+// 关闭和开启侧边栏
+function leftBar() {
+    if($(".left").attr("on") == 1 || $(".left").attr("on") == undefined){
+        $("#left-hiden").hide();
+        $(".left").animate({"width":"0",}).attr("on","0");
+        $(".right").animate({"margin-left":"10px"});
 
+        $("#left-bar").html("<i class='iconfont' title='显示'>&#xe61e;</i>");
+
+    }else if($(".left").attr("on") == 0){
+        $(".left").animate({"width":"100px"}).attr("on","1");
+        $(".right").animate({"margin-left":"100px"});
+        $("#left-hiden").show(300);
+        $("#left-bar").html("<i class='iconfont' title='隐藏'>&#xe612;</i>");
+    }
+}
+
+// 全屏
+//进入全屏
+function requestFullScreen() {
+    var de = document.documentElement;
+    if (de.requestFullscreen) {
+        de.requestFullscreen();
+    } else if (de.mozRequestFullScreen) {
+        de.mozRequestFullScreen();
+    } else if (de.webkitRequestFullScreen) {
+        de.webkitRequestFullScreen();
+    }
+}
+//退出全屏
+function exitFullscreen() {
+    var de = document;
+    if (de.exitFullscreen) {
+        de.exitFullscreen();
+    } else if (de.mozCancelFullScreen) {
+        de.mozCancelFullScreen();
+    } else if (de.webkitCancelFullScreen) {
+        de.webkitCancelFullScreen();
+    }
+}

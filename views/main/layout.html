@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/public/css/bootstrap.css">
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/font/iconfont.css">
+    <link rel="stylesheet" href="/public/js/highlight/styles/github.css">
+
     {% block style %}{% endblock %}
 </head>
 <body id="body">
@@ -27,7 +29,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <!--导航左边-->
             <ul class="nav navbar-nav">
-                <li><a href="#">ABOUT</a></li>
+                <li><a href="/about">ABOUT</a></li>
             </ul>
             <!--导航右边-->
             <ul class="nav navbar-nav navbar-right" >
@@ -74,7 +76,7 @@
         <div class="col-md-12 foot">
             <ul>
                 <li></li>
-                <li><a href="#">舍与得</a><span> Copyright&copy;2017</span></li>
+                <li><a href="/">舍与得</a><span> Copyright&copy;2017</span></li>
             </ul>
         </div>
     </div>
@@ -85,8 +87,9 @@
 <!-- JS部分-->
 <script src="/public/js/jquery.js"></script>
 <script src="/public/js/bootstrap.min.js"></script>
-<script src="/public/Makisu/js/makisu.min.js"></script>
-{% block script %}{% endblock %}
+<script src="/public/js/makisu.min.js"></script>
 <script src="/public/js/script.js"></script>
+<script src="/public/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

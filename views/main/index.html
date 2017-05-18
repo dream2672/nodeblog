@@ -1,9 +1,6 @@
 {% extends 'layout.html' %}
 {% set title={title:"首页"} %}
-{% import '../admin/helper.html' as helper %}
-{% block style %}
-<!--<link rel="stylesheet" href="/public/Makisu/css/style.css">-->
-{% endblock %}
+{% import 'helper.html' as helper %}
 {% block main %}
 <div class="container">
     <div class="row">
@@ -17,7 +14,7 @@
                 <div>
                     <a href="/">全部文章</a>
                     {% for category in categorys %}
-                        <a href="/admin/category?name={{category._id.toString()}}">{{category.name}}</a>
+                        <a href="/?category={{category._id.toString()}}">{{category.name}}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -26,25 +23,25 @@
     <div class="row main">
         <!--正文左边-->
         <div class="col-md-12 col-lg-9">
-            <!--<div></div>-->
             {% for article in articles %}
                 <div class="content main-title">
-                <h3><a href="article?id={{article._id.toString()}}" class="len">{{article.title}}</a></h3>
+                <h3><a href="article?id={{article._id.toString()}}" class="len color">{{article.title}}</a></h3>
                 <div class="article">
                     <div class="article-top">
-                        <i class="iconfont">&#xe615;</i>
-                        <span class="time" title="发表时间">{{article.creationTime|date('Y-m-d H:i:s',-8*60)}}</span>
-                        <i class="iconfont">&#xe63b;</i>
-                        <span title="浏览次数">{{article.count}}</span>
-
+                        <span class="time label label-default" title="发表时间"><i class="iconfont">&#xe615;</i>&nbsp;{{article.creationTime|date('Y-m-d H:i:s',-8*60)}}</span>
+                        <span class="count label label-info" title="浏览次数"><i class="iconfont">&#xe63b;</i>&nbsp;{{article.count}}</span>
+                        <span class="title label label-danger">作者:{{article.author}}</span>
+                        <span class=" spanc label label-success bgcolor hidden-xs hidden-sm">{{article.category.name}}</span>
                     </div>
-
                     <div class="article-text" id="preview">{{article.digest | safe }}</div>
+                    <div class="article-bottom text-center">
+                        <a href="article?id={{article._id.toString()}}">查看详情...</a>
+                    </div>
                 </div>
                 </div>
             {% endfor %}
             <!--分页-->
-            {{ helper.render_page() }}
+            {{ helper.main_page() }}
         </div>
 
         <!--正文右边-->
@@ -54,7 +51,7 @@
                     <dt>文章分类</dt>
                     <dd><a href="/">全部文章</a></dd>
                     {% for category in categorys %}
-                        <dd><a href="/admin/category?name={{category._id.toString()}}">{{category.name}}</a></dd>
+                        <dd><a href="/?category={{category._id.toString()}}">{{category.name}} <span class="text-center">sad</span></a></dd>
                     {% endfor %}
                 </dl>
             </div>

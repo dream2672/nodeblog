@@ -56,9 +56,41 @@ a:focus{
 .transform(@value){
   .pre(transform,@value);
 }
+.animation(@value){
+  .pre(animation,@value);
+}
+@-webkit-keyframes bgcolors {
+  0% { background:#39f}
+  15% { background:#F246C9}
+  30% { background:#4453F2}
+  45% { background:#44F262}
+  60% { background:#F257D4}
+  75% { background:#EDF255}
+  90% { background:#F20006}
+  100% { background:#39f}
+}
+.bgcolor{
+  .animation(bgcolors 200s ease 1 normal);
+}
+@-webkit-keyframes color {
+  0% { color:#39f}
+  15% { color:#F246C9}
+  30% { color:#4453F2}
+  45% { color:#44F262}
+  60% { color:#F257D4}
+  75% { color:#EDF255}
+  90% { color:#F20006}
+  100% { color:#39f}
+}
+.color{
+  .animation(color 200s ease 1 normal);
+}
 @media screen and (max-width: 799px) {
   body .head .h-fontsize{
     font-size: 1rem;
+  }
+  body .content .article{
+    padding: 10px 0 0 0;
   }
 }
 //改bt默认样式
@@ -130,9 +162,9 @@ a:focus{
 .main{
   margin-top:20px;
   &-title>h3{
-    height:40px;
-    line-height: 40px;
-    border-bottom:1px dashed #20afe9;
+    height:50px;
+    line-height: 50px;
+    border-bottom:3px solid #20afe9;
     font-size: 1.2rem;
     color: #20afe9;
     text-indent: 20px;
@@ -144,37 +176,81 @@ a:focus{
 .content{
   min-height:200px;
   margin-bottom:20px;
+  position: relative;
   .bc;
   &>h3>a{
     margin-left:-20px;
     width: 100%;
-    height:40px;
+    height:50px;
+    line-height: 50px;
     display: inline-block;
     color: #3372a2;
     transition: all 1s;
     .box-sizing();
   }
-  &>h3>aa:hover{
+  &>h3>a:hover{
     text-decoration: none;
     color:#38b7ea;
   }
   .article{
-    padding:10px 25px 20px 25px;
-    font-size: 1rem;
+    padding:10px 25px 0 25px;
+    margin-bottom:50px;
     &-top{
       color: #666;
       overflow: hidden;
       margin-bottom:10px;
+      height:30px;
+      span{
+        margin-right: 5px;
+        a{
+          color: #fff;
+        }
+      }
       .time{
-        margin-right: 10px;
+        background-color: #393939;
+      }
+      .count{
+        background-color: #ffc219;
+      }
+      .title{
+        background-color: #e32551;
+
+      }
+      .spanc{
+        background-color: #73c8a9;
+        float: right;
+        font-size: 0.95rem;
       }
     }
     &-text{
       font-size: 1rem;
       width:100%;
     }
+    // 文章下面
+    .article-bottom{
+      position: absolute;
+      right:0;
+      bottom:0;
+      width:100%;
+      a{
+        display: inline-block;
+        width:100%;
+        height:35px;
+        line-height: 35px;
+        color: #73c8a9;
+        border:0;
+        font-size: 1rem;
+        border-top:1px dashed #20afe9 ;
+        &:hover{
+          color: #e32551;
+        }
+      }
+    }
   }
 }
+.content
+
+
 // 侧边栏
 .sidebar div{
   margin-bottom: 20px;
