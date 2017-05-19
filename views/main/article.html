@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% set title={title:"首页"} %}
+{% set title={title:article.title} %}
 {% block main %}
 <div class="container">
     <div class="row main">
@@ -7,6 +7,7 @@
         <div class="col-md-12">
             <div class="content main-title">
                 <h3 class="len color">{{article.title}}</h3>
+                <input type="hidden" id="contentid" value="{{article._id.toString()}}">
                 <div class="article">
                     <div class="article-top">
                         <span class="time label label-default" title="发表时间"><i class="iconfont">&#xe615;</i>&nbsp;{{article.creationTime|date('Y-m-d H:i:s',-8*60)}}</span>
@@ -24,9 +25,30 @@
                 </div>
             </div>
 
-            <div class="content ">
-
-
+            <div class="content comment">
+                <div class="comment-content">
+                    <bottom class="comment-login">登陆</bottom>
+                    <div class="login-bottom"></div>
+                    <div class="login-center"></div>
+                    <textarea node-type="textarea" id="textarea" class="textarea">有事没事说两句...</textarea>
+                </div>
+                <div class="comment-submit" id="comment-submit">发表评论</div>
+                <div class="comment-main">还没有评论，快来抢沙发吧！</div>
+                <div class="conment-li">
+                    <div>最新评论</div>
+                    <ul>
+                        <li>
+                            <div class="conment-logo hidden-xs hidden-sm"><img src="/public/img/logo.gif" alt=""></div>
+                            <div>
+                                <span class="li-left">admin</span>
+                                <span class="li-right">2016-12-12</span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque enim expedita incidunt
+                                    laudantium, molestias totam vitae. Aperiam at deleniti fugit impedit maiores nobis
+                                    perspiciatis quod tenetur, ut vero. Commodi.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

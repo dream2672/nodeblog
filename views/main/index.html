@@ -49,9 +49,9 @@
             <div class="s1">
                 <dl class="list maki sidebar-1">
                     <dt>文章分类</dt>
-                    <dd><a href="/">全部文章</a></dd>
+                    <dd><a href="/">全部文章 </a><i class="badge">4</i></dd>
                     {% for category in categorys %}
-                        <dd><a href="/?category={{category._id.toString()}}">{{category.name}} <span class="text-center">sad</span></a></dd>
+                        <dd><a href="/?category={{category._id.toString()}}" class="category" cid="{{category._id.toString()}}">{{category.name}}</a> <i class="badge">1</i></dd>
                     {% endfor %}
                 </dl>
             </div>
@@ -69,13 +69,7 @@
                     <dd><a href="#">Ana-kyu</a></dd>
                     <dd><a href="#">Chutoro</a></dd>
                     <dd><a href="#">Kaiware</a></dd>
-                    <dd><a href="#">Kampyo</a></dd>
-                    <dd><a href="#">Kappa</a></dd>
-                    <dd><a href="#">Natto</a></dd>
-                    <dd><a href="#">Negitoro</a></dd>
-                    <dd><a href="#">Oshinko</a></dd>
-                    <dd><a href="#">Otoro</a></dd>
-                    <dd><a href="#">Tekka</a></dd>
+
                 </dl>
             </div>
         </div>

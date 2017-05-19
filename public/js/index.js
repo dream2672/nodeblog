@@ -2,6 +2,7 @@
  * Created by sheyude on 2017/4/24.
  */
 $(document).ready(function () {
+    // 代码高亮
     window.onscroll = function () {
         var t = document.documentElement.scrollTop || document.body.scrollTop;
         var $height = $("#head").height();
@@ -65,12 +66,46 @@ $(document).ready(function () {
         },10000)
     }
 
-
     // 限制长度
     // 限制文章标题
     maxStr(".len","..",30,15);
     // 限制侧边栏最新文章长度
     maxStr(".sidlen","..",10,10);
+
+    // 首页ajax分类数量请求
+    var cid = [];
+    $(".category").each(function (index, element) {
+        cid.push($(element).attr("cid"))
+    })
+    $.ajax({
+        type:'post',
+        url:"/api/category/count",
+        data:{cid:cid},
+        success:function (count) {
+            $(".sidebar-1 dd i").each(function (index, element) {
+                $(element).text(count[index])
+            })
+        }
+    })
+    // 评论
+    $("#textarea").click(function () {
+        $(this).text("");
+    })
+    $("#comment-submit").click(function(){
+        $.ajax({
+            type:'post',
+            url:'/api/comment',
+            data:{
+                contentid:$("#contentid").val(),
+                content:$("#textarea").val(),
+            },
+            success:function (responseData) {
+                $("#textarea").text("");
+                console.log(responseData)
+            }
+        })
+    })
+
 
 
 })

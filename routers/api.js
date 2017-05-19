@@ -21,6 +21,11 @@ var decToHex = function(str) {
         res[i]=("00"+str.charCodeAt(i).toString(16)).slice(-4);
     return "\\u"+res.join("\\u");
 }
+// 解码
+function hexToDec(str) {
+    str=str.replace(/\\/g,"%");
+    return unescape(str);
+}
 
 // 初始化统一返回格式,注意这里定义好了返回
 let responseData;
@@ -212,27 +217,56 @@ api.post('/img/verify',function(req, res, next){
 })
 
 // 后台api验证
-let x = []
 //接收后台添加分类发来的请求，去数据库查询如果有就返回false，没有就返回true；
 api.post('/category/name/',function(req, res){
     let obj = {name:req.body.categoryname}
     vilidite(Category, res, obj, true);
 });
-// todo 搞不定 数量统计
-api.get('/category/count',function (req, res) {
-    let id = req.query.id
-
-    Category.find().sort({number:-1}).then(function (categorys){
-        for(var i = 0; i<categorys.length;i++){
-            Article.count({category:categorys[i]._id}).then(function (count) {
-                // console.log(count)
-                x.push(count)
-                // console.log(x)
-            })
-        }
-        console.log(x)
+// todo 的好好研究
+api.post('/category/count/',function (req, res) {
+    let cid = req.body.cid || '';
+    let arr=[];
+    // 查询全部文章的分类id
+    Article.count().then(function (count) {
+        arr.push(count);
+        Article.find({},["category"]).then(function (article) {
+            for( var i = 0; i < cid.length; i++){
+                // 为了不让每一个是0，不然没办法相加
+                arr.push(0)
+                for( var j = 0; j < article.length; j++){
+                    if(cid[i].toString() == (article[j].category).toString()){
+                        // 因为前面统计了全部文章
+                        arr[i+1]++;
+                        continue;
+                    }
+                }
+            }
+            res.json(arr);
+        })
     })
 
-
-})
+});
+// 评论
+api.post('/comment/',function (req, res) {
+    // 内容id
+    let contentId = req.body.contentid || "";
+    // 定义评论信息
+    var postData = {
+        username:hexToDec(req.userInfo.username),
+        postTime:new Date(),
+        content:req.body.content,
+    }
+    // 查询这篇文章
+    Article.findOne({
+        _id:contentId
+    }).then(function (content) {
+        content.comments.push(postData);
+        // 返回
+        return content.save()
+    }).then(function (newContent) {
+        responseData.message = "评论成功";
+        responseData.data = newContent
+        res.json(responseData)
+    });
+});
 module.exports = api;
