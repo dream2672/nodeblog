@@ -3,7 +3,7 @@
  */
 
 const crypto = require('crypto');
-const secret = "7(**&UHIHhs6%^&^*(^^88349329sj"
+const secret = ""
 function hash(val) {
     const hash = crypto.createHmac('sha256', secret)
         .update(val)
