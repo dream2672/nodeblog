@@ -5,9 +5,10 @@
 <div class="container">
     <div class="row">
         <!--大屏不显示部分-->
-        <div class="col-md-12 hidden-lg">
-            <input type="text" class="search form-control" placeholder="输入关键字">
-        </div>
+        <!--todo屏蔽搜索-->
+        <!--<div class="col-md-12 hidden-lg">-->
+            <!--<input type="text" class="search form-control" placeholder="输入关键字">-->
+        <!--</div>-->
         <div class="col-md-12 hidden-lg">
             <div class="catrgory main-title">
                 <h3>文章分类</h3>
@@ -58,19 +59,20 @@
             <div class="s2">
                 <dl class="list maki sidebar-2">
                     <dt>最热文章</dt>
-                    {% for article in articles %}
-                        <dd><a href="#" class="sidlen">{{article.title}}</a></dd>
+                    {% for article in articleCount %}
+                        <dd><a href="/article?id={{article._id.toString()}}" class="sidlen">{{article.title}}</a></dd>
                     {% endfor %}
                 </dl>
             </div>
             <div class="s3">
-                <dl class="list maki sidebar-3">
-                    <dt>Maki</dt>
-                    <dd><a href="#">Ana-kyu</a></dd>
-                    <dd><a href="#">Chutoro</a></dd>
-                    <dd><a href="#">Kaiware</a></dd>
+                <!--// todo-->
+                <!--<dl class="list maki sidebar-3">-->
+                    <!--<dt>最热评论</dt>-->
+                    <!--<dd><a href="#">Ana-kyu</a></dd>-->
+                    <!--<dd><a href="#">Chutoro</a></dd>-->
+                    <!--<dd><a href="#">Kaiware</a></dd>-->
 
-                </dl>
+                <!--</dl>-->
             </div>
         </div>
     </div>

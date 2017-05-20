@@ -33,7 +33,7 @@ main.use(function (req, res, next) {
 main.get('/',function(req, res){
         data.page = Number(req.query.page) || 1;
         data.categoryid = req.query.category || '';
-        data.limit = 2;
+        data.limit = 10;
         data.pages = [];// 页数
         data.sum = 0;
         data.articles = [];
@@ -54,8 +54,11 @@ main.get('/',function(req, res){
         return Article.where(where).find().sort({_id:-1}).limit(data.limit).skip(skip).populate("category");
     }).then(function (articles) {
         data.articles = articles;
-        res.render("main/index",data)
-    })
+        return Article.find({},["title","count"]).limit(5).sort({count:-1})
+    }).then(function (articleCount) {
+            data.articleCount = articleCount
+            res.render("main/index",data)
+        })
 });
 // 文章页面
 main.get('/article/',function(req, res){

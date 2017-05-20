@@ -62,8 +62,9 @@ $(document).ready(function () {
         time = setTimeout(function(){
             $( '.sidebar-2' ).css({"display":"block"}).makisu( 'open' );
         },5000)
+
         time2 = setTimeout(function(){
-            $( '.sidebar-3' ).css({"display":"block"}).makisu( 'open' );
+            // $( '.sidebar-3' ).css({"display":"block"}).makisu( 'open' );
             clearTimeout(time);
             clearTimeout(time2);
         },10000)
@@ -121,6 +122,13 @@ $(document).ready(function () {
         })
     })
     // 每一次页面加载的时候
+    indexAjax()
+    // 首页最多查看
+    //
+
+})
+
+function indexAjax() {
     $.ajax({
         type:'post',
         url:'/api/comment',
@@ -140,8 +148,12 @@ $(document).ready(function () {
             }
         }
     })
+}
 
-})
+
+
+
+
 // 每页显示几条
 var perpage = 3;
 // 当前页数
@@ -151,12 +163,14 @@ var pages = 0;
 
 // 分页序号
 // 每页显示
-var perindex = 5;
+var perindex = 4;
 var indexPage = 1;
 
 
 
 function conmentContent(content) {
+    // 计算评论的索引
+    var contentIdex = content.length;
     var end =0;
     // 总页数,向上取整
     pages = Math.ceil(content.length / perpage);
@@ -226,7 +240,7 @@ function conmentContent(content) {
         }
     }
     if(indexPage != indexPages){
-        pageHtml += '<li><a href="javascript:;">'+ pages +'</a></li>';
+        pageHtml += '<li class="disabled"><a href="javascript:;">...</a></li>';
     }
     // 处理末页
     if(page >= pages){
@@ -243,17 +257,15 @@ function conmentContent(content) {
     var html = ''
     for (let j = start; j < end; j++){
         html += "<li><div class='conment-logo hidden-xs hidden-sm'><img src='/public/img/logo.gif'></div><div>" +
-            "<span class='li-left'>" + content[j].username + "</span><span class='li-right'>"+ conmentDate(content[j].postTime) +"</span>" +
+            "<span class='li-left'>" + content[j].username + "</span><span class='li-right'>"+ conmentDate(content[j].postTime) +
+            " <a index='"+ (contentIdex-j-1) +"' href='' >删除</a></span>" +
             "<p>"+ content[j].content +"</p></div></li>"
     }
     $("#conment-li").html(html);
-    // liClick(content);
     $("#articlePagination li").on("click", "a",function () {
         //上一页
         if($(this).attr("id") == "pageTop"){
             page--;
-            // todo bug
-            // console.log(page +"+"+perindex * indexPage)
             if(page+perindex <= (perindex * indexPage)){
                 indexPage --
             }
@@ -285,6 +297,26 @@ function conmentContent(content) {
             }
         }
         conmentContent(content)
+    })
+    $(".li-right").on("click","a",function () {
+        var contentid = $("#contentid").val();
+        var index = $(this).attr("index");
+        $.ajax({
+            type:"post",
+            url:"/admin/conment/del",
+            data:{
+                id:contentid,
+                index:index,
+            },
+            success:function (message) {
+                console.log(message)
+                if(message){
+                    indexAjax()
+                }
+            }
+        })
+        return false
+
     })
 }
 // 格式化时间

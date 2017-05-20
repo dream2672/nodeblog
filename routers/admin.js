@@ -8,6 +8,8 @@ let trimHtml = require("trim-html");
 let User = require("../models/User");
 let Category = require("../models/Catrgory");
 let Article = require("../models/Acticle");
+// 导入哈希
+let Hash = require('../method/hash');
 
 // 解码
 // todo 后台用户需要改进
@@ -86,12 +88,14 @@ function adminListPage(model,req,res,views,quantity,sort,populate){
 
 
 // 后台首页
+// todo 目前是直接转向
 admin.get('/',function(req, res){
     // 返回管理员信息给模版
-    res.render('admin/index',{
-        userInfo:req.userInfo,
-        username:hexToDec(req.userInfo.username + ''),
-    })
+    // res.render('admin/index',{
+    //     userInfo:req.userInfo,
+    //     username:hexToDec(req.userInfo.username + ''),
+    // })
+    res.redirect("/admin/article/list")
 });
 
 // 文章列表
@@ -267,11 +271,13 @@ admin.post("/user/edit",function(req, res){
     let id = req.query.id || '';
     let email = req.body.email || '';
     let isAdmin = req.body.isadmin || '';
+    let pwd = req.body.pwd || '123456'
     User.update({
         _id:id,
     },{
         email:email,
         isAdmin:isAdmin,
+        password:Hash.hash(pwd),
     }).then(function () {
         res.redirect("/admin/user/list")
     })
@@ -326,6 +332,19 @@ admin.get("/category/del/",function(req, res){
         res.redirect("/admin/category/list")
     })
 });
+//删除评论
+admin.post("/conment/del/",function(req, res){
+    var id = req.body.id || '';
+    var index = req.body.index || '';
+    Article.findOne({
+        _id:id
+    }).then(function (content) {
+        content.comments.splice(index,1);
+        // 返回
+        content.save()
+        res.json({code:"ok"})
+    })
+})
 
 // 404页面
 admin.get("*",function(req, res){
