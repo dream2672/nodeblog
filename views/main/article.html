@@ -27,27 +27,36 @@
 
             <div class="content comment">
                 <div class="comment-content">
-                    <bottom class="comment-login">登陆</bottom>
+                    <bottom class="comment-login">
+                        {% if userInfo._id %}
+                            欢迎
+                        {% else %}
+                            <a href="/login">登陆</a>
+                        {% endif %}
+                    </bottom>
                     <div class="login-bottom"></div>
+                    <div class="login-hen"></div>
                     <div class="login-center"></div>
                     <textarea node-type="textarea" id="textarea" class="textarea">有事没事说两句...</textarea>
                 </div>
-                <div class="comment-submit" id="comment-submit">发表评论</div>
+                {% if userInfo._id %}
+                    <div class="comment-submit" id="comment-submit">发表评论</div>
+                {% else %}
+                    <div class="comment-submit error" >登陆后评论</div>
+                {% endif %}
                 <div class="comment-main">还没有评论，快来抢沙发吧！</div>
                 <div class="conment-li">
-                    <div>最新评论</div>
-                    <ul>
-                        <li>
-                            <div class="conment-logo hidden-xs hidden-sm"><img src="/public/img/logo.gif" alt=""></div>
-                            <div>
-                                <span class="li-left">admin</span>
-                                <span class="li-right">2016-12-12</span>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque enim expedita incidunt
-                                    laudantium, molestias totam vitae. Aperiam at deleniti fugit impedit maiores nobis
-                                    perspiciatis quod tenetur, ut vero. Commodi.</p>
-                            </div>
-                        </li>
+                    <div class="conment-new">最新评论</div>
+                    <ul id="conment-li">
+                        <!--评论显示区域-->
                     </ul>
+                    <div class="text-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination" id="articlePagination">
+                               <!--分页部分-->
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>

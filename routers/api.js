@@ -246,8 +246,18 @@ api.post('/category/count/',function (req, res) {
     })
 
 });
-// 评论
+//获取评论
 api.post('/comment/',function (req, res) {
+    let contentId = req.body.contentid || "";
+    Article.findOne({
+        _id:contentId,
+    }).then(function (content) {
+        responseData.data = content;
+        res.json(responseData)
+    })
+});
+// 提交评论
+api.post('/comment/post/',function (req, res) {
     // 内容id
     let contentId = req.body.contentid || "";
     // 定义评论信息

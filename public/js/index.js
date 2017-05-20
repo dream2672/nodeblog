@@ -1,6 +1,9 @@
 /**
  * Created by sheyude on 2017/4/24.
  */
+// 处理评论
+// 每一页显示几条
+
 $(document).ready(function () {
     // 代码高亮
     window.onscroll = function () {
@@ -87,28 +90,214 @@ $(document).ready(function () {
             })
         }
     })
-    // 评论
+    // 发表评论
     $("#textarea").click(function () {
         $(this).text("");
     })
     $("#comment-submit").click(function(){
+        $(this).text("正在提交")
         $.ajax({
             type:'post',
-            url:'/api/comment',
+            url:'/api/comment/post',
             data:{
                 contentid:$("#contentid").val(),
                 content:$("#textarea").val(),
             },
             success:function (responseData) {
-                $("#textarea").text("");
-                console.log(responseData)
+                if(responseData.data.comments != 0){
+                    // 改变发表文字框的内容
+                    $("#comment-submit").text("发布评论")
+                    // 把上一次提交的值清空
+                    $("#textarea").val("");
+                    // 隐藏沙发框
+                    $(".comment-main").hide();
+                    // 显示评论框
+                    $(".conment-li").show();
+                    page = 1;
+                    conmentContent(responseData.data.comments.reverse());
+                }
+
             }
         })
     })
-
-
+    // 每一次页面加载的时候
+    $.ajax({
+        type:'post',
+        url:'/api/comment',
+        data:{
+            contentid:$("#contentid").val(),
+        },
+        success:function (responseData) {
+            // 如果有评论就显示！，没有就显示沙发
+            if(responseData.data.comments.length >= 1){
+                conmentContent(responseData.data.comments.reverse());
+                // liClick(responseData.data.comments.reverse());
+            }else{
+                // 显示沙发框
+                $(".comment-main").show();
+                // 隐藏评论框
+                $(".conment-li").hide();
+            }
+        }
+    })
 
 })
+// 每页显示几条
+var perpage = 3;
+// 当前页数
+var page = 1;
+// 总页数
+var pages = 0;
+
+// 分页序号
+// 每页显示
+var perindex = 5;
+var indexPage = 1;
+
+
+
+function conmentContent(content) {
+    var end =0;
+    // 总页数,向上取整
+    pages = Math.ceil(content.length / perpage);
+    if(pages == 1){
+        $("#articlePagination").hide()
+    }
+    // 开始
+    var start = (page -1) * perpage;
+    // console.log(start)
+    //结束
+    // 解决最后空单条数据报找不到内容
+    if(pages == page){
+        // 解决最后一页单数的问题
+        end = content.length
+    }else{
+        //判断如果总数没有达到
+        if (perpage >= content.length){
+            end = start + content.length;
+        }else{
+            end = start + perpage;
+        };
+    }
+    // 下面序号显示逻辑
+    var indexStart = 0;
+    // 总页数
+    var indexPages = Math.ceil(pages / perindex);
+
+    //
+    // }
+    // 开始
+    if(indexPage == 1){
+        indexStart= (indexPage -1) * perindex;
+    }else{
+        indexStart= (indexPage -1) * perindex ;
+    }
+
+    // 结束
+    if (indexPage == indexPages){
+        var indexEnd = pages -1
+    }else{
+        var indexEnd = indexStart + perindex;
+
+    }
+    // 处理总页数达不到2页的时候
+    if(indexPages <= 1){
+        var indexEnd = pages -1
+    }
+
+    // 分页
+
+    var pageHtml = '';
+    pageHtml += '<li><a href="javascript:;">首页</a></li>';
+
+    // 处理上一页
+    if(page <= 1){
+        page = 1;
+        pageHtml += '<li class="disabled"><a href="javascript:;"><span>«</span></a></li>';
+    }else {
+        pageHtml += '<li><a href="javascript:;"id="pageTop"><span>«</span></a></li>';
+    }
+    // 处理页数
+    for(var i = indexStart; i < indexEnd+1; i++){
+        if(i == (page - 1)){
+            pageHtml += '<li class="active"><a href="javascript:;">'+ (i + 1) +'</a></li>'
+        }else{
+            pageHtml += '<li><a href="javascript:;">'+ (i + 1) +'</a></li>'
+        }
+    }
+    if(indexPage != indexPages){
+        pageHtml += '<li><a href="javascript:;">'+ pages +'</a></li>';
+    }
+    // 处理末页
+    if(page >= pages){
+        page = pages;
+        pageHtml += '<li class="disabled"><a href="javascript:;" aria-label="Next"><span aria-hidden="true">»</span></a></li>';
+    }else{
+        pageHtml += '<li><a href="javascript:;" id="pageNext"><span >»</span></a></li>';
+    }
+    pageHtml += '<li><a href="javascript:;">末页</a></li>';
+    $("#articlePagination").html(pageHtml)
+
+
+    // 处理评论内容
+    var html = ''
+    for (let j = start; j < end; j++){
+        html += "<li><div class='conment-logo hidden-xs hidden-sm'><img src='/public/img/logo.gif'></div><div>" +
+            "<span class='li-left'>" + content[j].username + "</span><span class='li-right'>"+ conmentDate(content[j].postTime) +"</span>" +
+            "<p>"+ content[j].content +"</p></div></li>"
+    }
+    $("#conment-li").html(html);
+    // liClick(content);
+    $("#articlePagination li").on("click", "a",function () {
+        //上一页
+        if($(this).attr("id") == "pageTop"){
+            page--;
+            // todo bug
+            // console.log(page +"+"+perindex * indexPage)
+            if(page+perindex <= (perindex * indexPage)){
+                indexPage --
+            }
+        }
+        //下一页
+        if($(this).attr("id") == "pageNext"){
+            page++;
+            if(page > (perindex * indexPage)){
+                indexPage++
+            }
+        }
+        // 里面的分页
+        if($(this).text() >= 1 && $(this).text() <= pages){
+            page = $(this).text()
+        }
+        // 首页
+        if($(this).text() == "首页"){
+            page = 1;
+            indexPage = 1
+        }
+        // 末页
+        if($(this).text() == "末页"){
+            page = pages;
+            indexPage = indexPages;
+        }
+        if($(this).text() > (perindex * indexPage) ){
+            if(indexPage <= indexPages){
+                indexPage++
+            }
+        }
+        conmentContent(content)
+    })
+}
+// 格式化时间
+function conmentDate(t) {
+    var date = new Date(t);
+    var str = date.getFullYear() + "年" + (date.getMonth()+1) + "月" + date.getDate() + "日"
+    + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    return str;
+}
+
+
+
+
 /**
  *  设置大屏和小屏文字长度限制
  * @param setClass 接收需要限制的类名

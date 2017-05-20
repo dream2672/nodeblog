@@ -29,11 +29,11 @@ main.use(function (req, res, next) {
     })
     next();
 });
-
+// 首页
 main.get('/',function(req, res){
         data.page = Number(req.query.page) || 1;
         data.categoryid = req.query.category || '';
-        data.limit = 10;
+        data.limit = 2;
         data.pages = [];// 页数
         data.sum = 0;
         data.articles = [];

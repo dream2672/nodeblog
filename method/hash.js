@@ -11,4 +11,3 @@ function hash(val) {
     return hash
 }
 module.exports.hash = hash;
-// console.log(hash("www"))

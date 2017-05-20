@@ -313,6 +313,7 @@ a:focus{
     width:90%;
     margin:50px auto 0 auto;
     border-radius: 10px;
+    // 圆圈
     .comment-login{
       display: inline-block;
       height:40px;
@@ -326,25 +327,42 @@ a:focus{
       cursor: pointer;
       position: absolute;
       left:22px;
-      top:-36px;
-      z-index: 2;
+      top:-29px;
+      z-index: 3;
       background-color: #fff;
+      a{
+        color: #e74c3c;
+      }
     }
+    //圆弧
     .login-bottom{
       position: absolute;
-      top:-1px;
+      top:-26px;
       left:20px;
-      height:20px;
-      width:50px;
-      background:url(/public/img/border-t.png) no-repeat;
+      height:40px;
+      width:44px;
+      border:1px solid #e74c3c;
+      border-radius: 100%;
+
     }
+    //横线
     .login-center{
-      width: 32px;
+      width: 40px;
       border-top:1px solid #FFF;
       position: absolute;
-      left:26px;
+      left:22px;
       top:-1px;
     }
+    //横向div
+    .login-hen{
+      width:66px;
+      height:28px;
+      background-color: #fff;
+      position: absolute;
+      left:15px;
+      top:-29px;
+    }
+    //文本框
     .textarea{
       margin:20px auto 10px 20px;
       width:92%;
@@ -372,28 +390,39 @@ a:focus{
       background-color: #cf4149;
     }
   }
+  // 未登陆
+  .error{
+    width:100px;
+    background-color: #a2a2a2;
+    &:hover{
+      background-color: #606060;
+      cursor: not-allowed;
+      user-select:none
+    }
+  }
+  //还没有评论
   .comment-main{
     text-align: center;
     height:30px;
     line-height: 30px;
     background-color: #f0f0f0;
     width:90%;
-    margin:50px auto 0 auto;
-    color: #cacaca;
+    margin:70px auto 30px auto;
+    color: #b7b7b7;
     display: none;
   }
   // 评论框
   .conment-li{
     width:90%;
     margin:50px auto 20px auto;
-    &>div{
+    &>.conment-new{
       padding-left:5px;
       color: #cf4149;
       border-left:3px solid #cf4149;
       font-size: 1.1rem;
       margin-bottom:25px;
     }
-    & ul li{
+    #conment-li li{
       overflow: hidden;
       border-bottom: 1px dashed #e5e5e5;
       padding:20px 0 20px 0;
@@ -402,7 +431,7 @@ a:focus{
 
       }
     }
-    & ul li div:first-child{
+    #conment-li li div:first-child{
       float: left;
       width:60px;
       img{
@@ -411,7 +440,7 @@ a:focus{
         margin-top:5px;
       }
     }
-    & ul li div:last-child{
+    #conment-li li div:last-child{
       width:93%;
       float: right;
       overflow: hidden;

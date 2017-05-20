@@ -84,7 +84,7 @@ mongoose.connect('mongodb://122.228.180.10:27017/blog',function(err){
     }else{
         console.log("数据库已经成功连接！");
         // 监听http请求
-        app.listen(4000);
+        app.listen(3000);
         console.log("服务器成功启动:http://127.0.0.1:3000")
     }
 });

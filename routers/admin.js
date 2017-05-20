@@ -190,8 +190,6 @@ admin.get("/category/list/",function(req, res){
 
 
 
-
-
 //判断是否是超级管理员
 admin.use(function(req, res, next){
     error = {
