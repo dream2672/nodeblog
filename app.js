@@ -78,7 +78,7 @@ app.use("/",require("./routers/main"));
 
 
 // 连接数据库
-mongoose.connect('mongodb://122.228.180.10:27017/blog',function(err){
+mongoose.connect('mongodb://0.0.0.0:27017/blog',function(err){
     if(err){
         console.log("数据库连接失败！");
     }else{
